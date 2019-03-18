@@ -1,7 +1,7 @@
 <template>
   <v-toolbar color="primary" dark app fixed>
     <v-toolbar-side-icon @click.stop="handleDrawerToggle"></v-toolbar-side-icon>
-    <v-toolbar-title>Admin Panel</v-toolbar-title>
+    <v-toolbar-title>{{toolbarTitle}}</v-toolbar-title>
     <v-spacer/>
     <v-menu offset-y transition="slide-y-transition">
       <v-btn icon large flat slot="activator">
@@ -27,6 +27,7 @@
 <script>
 export default {
   data: () => ({
+    toolbarTitle: "",
     items: [
       {
         title: "Profile",
@@ -52,10 +53,18 @@ export default {
     },
     handleMenuAction(action) {
       if (action === "logout") {
-        this.$store.dispatch('userLogout')
+        this.$store.dispatch("userLogout");
       }
       console.log(action);
     }
+  },
+  mounted(){
+    this.toolbarTitle = this.$route.name
+  },
+  created() {
+    window.getApp.$on("TOOLBAR_TITLE", title => {
+      this.toolbarTitle = title.charAt(0).toUpperCase() + title.slice(1);
+    });
   }
 };
 </script>

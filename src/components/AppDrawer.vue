@@ -1,7 +1,7 @@
 <template>
-  <v-navigation-drawer fixed app width="250" :mini-variant.sync="mini" v-model="drawer">
+  <v-navigation-drawer fixed app width="250" :mini-variant="mini" v-model="drawer">
     <v-toolbar color="primary" dark flat>
-      <v-avatar size="36">
+      <v-avatar size="36" @click="toggleDrawerMini">
         <img src="../assets/logo.svg" alt="admin" height="36">
       </v-avatar>
       <v-toolbar-title class="ml-0 pl-3">
@@ -49,7 +49,12 @@ export default {
   methods: {
     navigateTo(destination) {
       console.log("destination: " + destination);
+      window.getApp.$emit("TOOLBAR_TITLE", destination);
       this.$router.push("/" + destination);
+    },
+    toggleDrawerMini() {
+      console.log("mini drawer action");
+      this.mini = !this.mini;
     }
   },
   created() {
