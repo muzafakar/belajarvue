@@ -25,7 +25,9 @@ export default new Vuex.Store({
     loginProcedure(state, user) {
       // save all session key-value here
       // set state to any or true
-      this.dispatch('fetchOwner') // check wheter we already have owner on localStorage or not
+      if (!localStorage.getItem('owner')) {
+        this.dispatch('fetchOwner') // check wheter we already have owner on localStorage or not
+      }
       state.currentUser = user
     }
   },
@@ -36,16 +38,22 @@ export default new Vuex.Store({
         const auth = await firebase.auth.signInWithEmailAndPassword(authData.email, authData.password)
         sessionStorage.setItem('user', JSON.stringify(auth.user))
         commit('loginProcedure', auth.user)
+        window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Assalamu'alaikum, " + auth.user.email + " :)", color: 'success' })
         router.push('/dashboard')
       } catch (error) {
+        window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Login Failed, check email and password!", color: 'error' })
         console.log("login error")
       }
     },
     userLogout({ commit }) {
       commit('logoutProcedure')
       router.push('/login')
+      window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Loged Out", color: 'error darken-2' })
     },
     fetchOwner() {
+      console.log('fetching remote data')
+      localStorage.removeItem('owner')
+      this.commit('saveOwner', null)
       firebase.owner.get().then(snapshot => {
         let owners = []
         snapshot.forEach(doc => {

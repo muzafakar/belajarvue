@@ -11,6 +11,9 @@
     >
       <template v-slot:header>
         <v-toolbar>
+          <v-btn icon @click="fetchRemoteOwnerData">
+            <v-icon>refresh</v-icon>
+          </v-btn>
           <v-toolbar-title>Owner List</v-toolbar-title>
           <v-spacer/>
           <v-text-field
@@ -65,12 +68,15 @@ export default {
   methods: {
     showOwnerDetail(name) {
       console.log("ownerDetail: " + JSON.stringify(name));
+    },
+    fetchRemoteOwnerData() {
+      this.$store.dispatch("fetchOwner");
     }
   },
   created() {
+    // TODO buat jadi observer
     const owners = JSON.parse(localStorage.getItem("owner"));
     this.items = owners;
-    console.log(owners);
   }
 };
 </script>

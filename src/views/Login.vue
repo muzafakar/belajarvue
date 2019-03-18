@@ -13,7 +13,7 @@
                   <h1 class="flex my-4 primary--text">Admin Login</h1>
                 </div>
               </v-card-text>
-              <v-form @keyup.enter="login">
+              <v-form @keyup.enter="login()" @submit="login()">
                 <v-text-field
                   name="email"
                   label="Email"
@@ -31,7 +31,7 @@
               </v-form>
 
               <v-card-actions>
-                <v-btn block :loading="loading" color="primary" @click="login">Login</v-btn>
+                <v-btn block :loading="loading" color="primary" @click="login()">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>

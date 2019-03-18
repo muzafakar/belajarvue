@@ -54,8 +54,6 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const isRequiresAuth = to.matched.some(x => x.meta.requiresAuth)
   const isLogedIn = sessionStorage.getItem('user')
-  // const isLogedIn = false
-  console.log("logedIn: " + isLogedIn)
   if (isRequiresAuth && !isLogedIn) {
     next('/login')
   } else if (isRequiresAuth && isLogedIn) {
