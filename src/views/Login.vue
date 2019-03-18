@@ -13,25 +13,25 @@
                   <h1 class="flex my-4 primary--text">Admin Login</h1>
                 </div>
               </v-card-text>
-              <v-form>
+              <v-form @keyup.enter="login">
                 <v-text-field
-                  name="username"
-                  label="Username"
-                  prepend-icon="person"
-                  type="text"
-                  v-model="login.username"
+                  name="email"
+                  label="Email"
+                  prepend-icon="email"
+                  type="email"
+                  v-model="auth.email"
                 />
                 <v-text-field
                   name="password"
                   label="Password"
                   prepend-icon="lock"
                   type="password"
-                  v-model="login.password"
+                  v-model="auth.password"
                 />
               </v-form>
 
               <v-card-actions>
-                <v-btn block :loading="loading" color="primary" @click="loading = true">Login</v-btn>
+                <v-btn block :loading="loading" color="primary" @click="login">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -46,18 +46,19 @@ import { setTimeout } from "timers";
 export default {
   data: () => ({
     loading: false,
-    login: {
-      username: "",
+    auth: {
+      email: "",
       password: ""
     }
   }),
-  watch: {
-    loading() {
+  methods: {
+    login() {
+      this.loading = true;
       setTimeout(() => {
         this.loading = false;
-        console.log(this.login.username);
-        console.log(this.login.password);
-        this.$store.dispatch("userLogin", this.login);
+        console.log(this.auth.email);
+        console.log(this.auth.password);
+        this.$store.dispatch("userLogin", this.auth);
       }, 1500);
     }
   }

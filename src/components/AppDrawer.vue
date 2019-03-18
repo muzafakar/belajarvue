@@ -35,14 +35,14 @@ export default {
         direction: "dashboard"
       },
       {
+        title: "Owner",
+        icon: "person",
+        direction: "owner"
+      },
+      {
         title: "Instance",
         icon: "account_balance",
         direction: "instance"
-      },
-      {
-        title: "Profile",
-        icon: "person",
-        direction: "profile"
       }
     ]
   }),

@@ -32,7 +32,7 @@ export default {
   }),
   created() {
     window.getApp.$on("TOOLBAR_TITLE", title => {
-      if(title === "instance"){
+      if(title === "instance" || title === "owner"){
         this.showFab = true
       }else{
         this.showFab = false
