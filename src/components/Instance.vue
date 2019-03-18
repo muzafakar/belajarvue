@@ -1,5 +1,15 @@
 <template>
   <v-container fluid grid-list-lg>
-    <h1>This is 'instance' component</h1>
+      <InstanceTable/>
   </v-container>
 </template>
+
+<script>
+import InstanceTable from "./tables/InstanceTable";
+export default {
+  components: {
+    InstanceTable
+  }
+};
+</script>
+
