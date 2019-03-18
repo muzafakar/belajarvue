@@ -8,10 +8,7 @@
               <v-card-text>
                 <div class="layout column align-center">
                   <v-avatar size="150" color="red">
-                    <img
-                      src="https://scontent-sin6-1.xx.fbcdn.net/v/t1.0-1/p160x160/52961306_1120152551496910_7657676592822353920_n.jpg?_nc_cat=104&_nc_ht=scontent-sin6-1.xx&oh=8fbb2a99785c459e2a0c3eef4dd01767&oe=5D163DAC"
-                      alt="admin"
-                    >
+                    <img src="../assets/muza.png" alt="admin">
                   </v-avatar>
                   <h1 class="flex my-4 primary--text">Admin Login</h1>
                 </div>
@@ -34,13 +31,7 @@
               </v-form>
 
               <v-card-actions>
-                <v-btn
-                  block
-                  :loading="loading"
-                  :disabled="loading"
-                  color="primary"
-                  @click="loading = true"
-                >Login</v-btn>
+                <v-btn block :loading="loading" color="primary" @click="loading = true">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -62,7 +53,10 @@ export default {
   }),
   watch: {
     loading() {
-      setTimeout(() => (this.loading = false), 3000);
+      setTimeout(() => {
+        this.loading = false;
+        this.$router.push("/dashboard");
+      }, 3000);
     }
   }
 };
