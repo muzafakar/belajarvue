@@ -10,7 +10,7 @@
         </v-avatar>
       </v-btn>
       <v-list>
-        <v-list-tile v-for="item in items" :key="item.key" @click="item.click">
+        <v-list-tile v-for="item in items" :key="item.key" @click="handleMenuAction(item.action)">
           <v-list-tile-action>
             <v-icon>{{item.icon}}</v-icon>
           </v-list-tile-action>
@@ -31,23 +31,17 @@ export default {
       {
         title: "Profile",
         icon: "person",
-        click: e => {
-          console.log(e);
-        }
+        action: "profile"
       },
       {
         title: "Settings",
         icon: "settings",
-        click: e => {
-          console.log(e);
-        }
+        action: "settings"
       },
       {
         title: "Logout",
         icon: "exit_to_app",
-        click: e => {
-          console.log(e);
-        }
+        action: "logout"
       }
     ]
   }),
@@ -55,6 +49,12 @@ export default {
     handleDrawerToggle() {
       console.log("APP_DRAWER_TOGGLE");
       window.getApp.$emit("APP_DRAWER_TOGGLE");
+    },
+    handleMenuAction(action) {
+      if (action === "logout") {
+        this.$store.dispatch('userLogout')
+      }
+      console.log(action);
     }
   }
 };

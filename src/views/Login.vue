@@ -55,8 +55,10 @@ export default {
     loading() {
       setTimeout(() => {
         this.loading = false;
-        this.$router.push("/dashboard");
-      }, 3000);
+        console.log(this.login.username);
+        console.log(this.login.password);
+        this.$store.dispatch("userLogin", this.login);
+      }, 1500);
     }
   }
 };

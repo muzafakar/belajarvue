@@ -10,7 +10,7 @@
     </v-toolbar>
 
     <v-list>
-      <v-list-tile v-for="item in items" :key="item.key" @click="item.click">
+      <v-list-tile v-for="item in items" :key="item.key" @click="navigateTo(item.direction)">
         <v-list-tile-action>
           <v-icon>{{item.icon}}</v-icon>
         </v-list-tile-action>
@@ -32,26 +32,26 @@ export default {
       {
         title: "Dashboard",
         icon: "dashboard",
-        click: e => {
-          console.log(e);
-        }
+        direction: "dashboard"
       },
       {
         title: "Instance",
         icon: "account_balance",
-        click: e => {
-          console.log(e);
-        }
+        direction: "instance"
       },
       {
         title: "Profile",
         icon: "person",
-        click: e => {
-          console.log(e);
-        }
+        direction: "profile"
       }
     ]
   }),
+  methods: {
+    navigateTo(destination) {
+      console.log("destination: " + destination);
+      this.$router.push("/" + destination);
+    }
+  },
   created() {
     window.getApp.$on("APP_DRAWER_TOGGLE", () => {
       console.log("drawer action");
