@@ -1,14 +1,14 @@
 <template>
   <v-container fluid grid-list-lg>
-      <OwnerTable/>
+      <InstanceTable/>
   </v-container>
 </template>
 
 <script>
-import OwnerTable from "./tables/OwnerTable";
+import InstanceTable from "../tables/InstanceTable";
 export default {
   components: {
-    OwnerTable
+    InstanceTable
   }
 };
 </script>

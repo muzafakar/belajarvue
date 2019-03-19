@@ -8,7 +8,7 @@
         <v-flex xs12>
           <router-view></router-view>
           <v-fab-transition>
-            <v-btn fixed dark fab bottom right color="primary" v-show="showFab">
+            <v-btn fixed dark fab bottom right color="primary" v-show="showFab" @click.stop="showDialog">
               <v-icon>add</v-icon>
             </v-btn>
           </v-fab-transition>
@@ -30,12 +30,19 @@ export default {
   data: () => ({
     showFab: false
   }),
+  methods: {
+    showDialog() {
+      const pageName = this.$route.name;
+      console.log("pageName: " + pageName);
+      window.getApp.$emit(pageName);
+    }
+  },
   created() {
     window.getApp.$on("TOOLBAR_TITLE", title => {
-      if(title === "instance" || title === "owner"){
-        this.showFab = true
-      }else{
-        this.showFab = false
+      if (title === "instance" || title === "owner") {
+        this.showFab = true;
+      } else {
+        this.showFab = false;
       }
     });
   }

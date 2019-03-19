@@ -37,9 +37,9 @@ export default new Vuex.Store({
       try {
         const auth = await firebase.auth.signInWithEmailAndPassword(authData.email, authData.password)
         sessionStorage.setItem('user', JSON.stringify(auth.user))
+        router.push('/dashboard')
         commit('loginProcedure', auth.user)
         window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Assalamu'alaikum, " + auth.user.email + " :)", color: 'success' })
-        router.push('/dashboard')
       } catch (error) {
         window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Login Failed, check email and password!", color: 'error' })
         console.log("login error")

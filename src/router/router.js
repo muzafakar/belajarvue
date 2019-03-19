@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
-// SEPARATED
-import Dashboard from '@/components/Dashboard'
-import Owner from '@/components/Owner'
-import Instance from '@/components/Instance'
+// SEPARATED (PAGE)
+import Dashboard from '@/components/page/Dashboard'
+import Owner from '@/components/page/Owner'
+import Instance from '@/components/page/Instance'
 
 Vue.use(Router)
 
