@@ -2,7 +2,15 @@
   <div>
     <v-app>
       <router-view></router-view>
-      <v-snackbar v-model="snackbar.show" bottom right multi-line :timeout="3000" :color="snackbar.color" auto-height>
+      <v-snackbar
+        v-model="snackbar.show"
+        bottom
+        right
+        multi-line
+        :timeout="3000"
+        :color="snackbar.color"
+        auto-height
+      >
         {{snackbar.text}}
         <v-btn flat color="white" @click.native="snackbar.show = false">
           <v-icon>close</v-icon>
@@ -17,8 +25,8 @@ export default {
   data: () => ({
     snackbar: {
       show: false,
-      text: '',
-      color: ''
+      text: "",
+      color: ""
     }
   }),
   created() {

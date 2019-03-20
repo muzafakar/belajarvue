@@ -36,12 +36,12 @@ export default {
       },
       {
         title: "Owner",
-        icon: "person",
+        icon: "face",
         direction: "owner"
       },
       {
         title: "Instance",
-        icon: "account_balance",
+        icon: "domain",
         direction: "instance"
       }
     ]

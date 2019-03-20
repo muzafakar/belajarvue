@@ -53,7 +53,8 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const isRequiresAuth = to.matched.some(x => x.meta.requiresAuth)
-  const isLogedIn = sessionStorage.getItem('user')
+  const isLogedIn = JSON.parse(localStorage.getItem('user'))
+  console.log('isLogedIn: ' + isLogedIn)
   if (isRequiresAuth && !isLogedIn) {
     next('/login')
   } else if (isRequiresAuth && isLogedIn) {

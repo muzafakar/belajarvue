@@ -1,16 +1,16 @@
 <template>
   <v-container fluid grid-list-lg>
-    <OwnerTable/>
+    <OwnerIterator/>
     <NewOwner/>
   </v-container>
 </template>
 
 <script>
-import OwnerTable from "../tables/OwnerTable";
+import OwnerIterator from "../tables/OwnerIterator";
 import NewOwner from "../modal/NewOwner";
 export default {
   components: {
-    OwnerTable,
+    OwnerIterator,
     NewOwner
   }
 };
