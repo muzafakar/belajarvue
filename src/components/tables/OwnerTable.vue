@@ -20,7 +20,7 @@
       </v-flex>
     </v-toolbar>
 
-    <v-data-table :headers="headers" :items="items" :search="search">
+    <v-data-table :headers="headers" :items="$store.state.owner" :search="search">
       <template v-slot:items="props">
         <td>{{props.item.name}}</td>
         <td>{{props.item.email}}</td>
@@ -53,8 +53,7 @@ export default {
         text: "Address",
         value: "address"
       }
-    ],
-    items: []
+    ]
   }),
   methods: {
     showOwnerDetail(name) {
@@ -63,17 +62,6 @@ export default {
     fetchRemoteOwnerData() {
       this.$store.dispatch("fetchOwner");
     }
-  },
-
-  watch: {
-    ownerData() {}
-  },
-
-  created() {
-    // TODO buat jadi observer
-    const owners = this.$store.state.owner;
-    this.items = owners;
-    console.log(owners);
   }
 };
 </script>

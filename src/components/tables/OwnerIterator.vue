@@ -19,7 +19,7 @@
     </v-toolbar>
 
     <v-data-iterator
-      :items="items"
+      :items="$store.state.owner"
       :rows-per-page-items="rowsPerPageItems"
       :pagination.sync="pagination"
       :search="search"
@@ -71,8 +71,7 @@ export default {
     rowsPerPageItems: [4, 8, 12],
     pagination: {
       rowsPerPage: 4
-    },
-    items: []
+    }
   }),
   methods: {
     showOwnerDetail(name) {
@@ -81,17 +80,6 @@ export default {
     fetchRemoteOwnerData() {
       this.$store.dispatch("fetchOwner");
     }
-  },
-
-  watch: {
-    ownerData() {}
-  },
-
-  created() {
-    // TODO buat jadi observer
-    const owners = this.$store.state.owner;
-    this.items = owners;
-    console.log(owners);
   }
 };
 </script>

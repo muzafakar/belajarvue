@@ -1,60 +1,97 @@
 <template>
   <v-layout row justify-center>
-    <!-- Form Dialog -->
     <v-dialog
       v-model="formDialog"
-      fullscreen
-      hide-overlay
-      transition="dialog-bottom-transition"
-      lazy
+      scrollable
+      persistent
+      max-width="500px"
+      transition="dialog-transition"
     >
       <v-card>
-        <v-toolbar dark color="primary">
-          <v-btn icon dark @click="formDialog = false">
+        <v-toolbar color="blue darken-3" dark>
+          <v-btn icon @click="formDialog = false">
             <v-icon>close</v-icon>
           </v-btn>
-          <v-toolbar-title>Add New Owner</v-toolbar-title>
-          <v-spacer></v-spacer>
+          <v-toolbar-title>Add Owner</v-toolbar-title>
+          <v-spacer/>
           <v-toolbar-items>
-            <v-btn dark flat @click="addNewOwner">Save</v-btn>
+            <v-btn dark flat @click="addNewOwner">Submit</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <v-flex xs6>
-          <v-form>
-            <v-text-field id="name" label="Name" type="text" required v-model="name" :counter="25"/>
-            <v-text-field
-              id="address"
-              label="Address"
-              type="text"
-              required
-              :counter="75"
-              v-model="address"
-            />
-            <v-text-field id="phone" label="Phone" type="text" required v-model="phone"></v-text-field>
-            <v-text-field id="email" label="Email" type="text" required v-model="email"></v-text-field>
-            <v-text-field
-              id="password"
-              label="Password"
-              type="password"
-              required
-              v-model="password"
-            ></v-text-field>
-            <!-- <v-text-field label="Confirm Password" type="password" required></v-text-field> -->
-          </v-form>
-        </v-flex>
+
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout row wrap>
+              <v-flex xs12>
+                <v-text-field name="name" label="Name" required v-model="name" type="text"/>
+              </v-flex>
+              <v-flex xs6>
+                <v-text-field
+                  name="phone"
+                  type="text"
+                  label="Phone"
+                  required
+                  v-model="phone"
+                  hint="Tidak harus +62"
+                />
+              </v-flex>
+              <v-flex xs6>
+                <v-text-field
+                  name="email"
+                  label="Email"
+                  required
+                  type="text"
+                  v-model="email"
+                  hint="Digunakan login di apps"
+                />
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field
+                  textarea
+                  name="address"
+                  label="Address"
+                  required
+                  v-model="address"
+                  type="text"
+                />
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field
+                  name="password"
+                  label="Password"
+                  required
+                  type="password"
+                  v-model="password"
+                  hint="tolong kasi regex"
+                />
+              </v-flex>
+              <v-flex xs12>
+                <v-text-field
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  type="password"
+                  required
+                  v-model="confirmPassword"
+                  hint="tolong kasi regex"
+                />
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-card-text>
       </v-card>
     </v-dialog>
 
-    <!-- Progress Dialog -->
-    <v-dialog v-model="progressDialog" transition="dialog-transition" width="300">
-      <v-card color="primary" dark>
-        <v-card-text>Processing...
-          <v-progress-linear :indeterminate="true" color="white" class="mb-0"/>
-        </v-card-text>
+    <v-dialog v-model="progressDialog" scrollable max-width="250px" transition="dialog-transition">
+      <v-card color="blue darken-3" dark class="px-3">
+        <v-card-title primary-title>
+          <strong>Submitting...</strong>
+        </v-card-title>
+        <v-progress-linear :indeterminate="true" color="white"></v-progress-linear>
       </v-card>
     </v-dialog>
   </v-layout>
 </template>
+
 
 <script>
 import { validationMixin } from "vuelidate";
@@ -76,6 +113,7 @@ export default {
     address: "",
     email: "",
     password: "",
+    confirmPassword: "",
     phone: ""
   }),
 
@@ -89,7 +127,8 @@ export default {
         email: this.email,
         address: this.address,
         phone: this.phone,
-        password: this.password
+        password: this.password,
+        confirmPassword: this.confirmPassword
       };
 
       this.$store.dispatch("addNewOwner", newOwner);
@@ -110,6 +149,7 @@ export default {
       this.address = "";
       this.email = "";
       this.password = "";
+      this.confirmPassword = "";
     });
   }
 };

@@ -56,7 +56,7 @@ export default new Vuex.Store({
 
     fetchOwner() {
       console.log('fetching remote data')
-      this.commit('saveOwner', null)
+      this.commit('saveOwner', [])
       firebase.owner.get().then(snapshot => {
         let owners = []
         snapshot.forEach(doc => {
