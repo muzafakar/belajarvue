@@ -11,10 +11,12 @@ const config = {
 };
 firebase.initializeApp(config);
 
-const owner = firebase.firestore().collection('owner')
 const auth = firebase.auth()
+const owner = firebase.firestore().collection('owner')
+const instance = firebase.firestore().collection('instance')
 
 export {
     owner,
+    instance,
     auth
 }

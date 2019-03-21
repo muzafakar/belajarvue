@@ -13,7 +13,7 @@ export default new Vuex.Store({
     owner: []
   },
 
- 
+
 
   mutations: {
     saveOwner(state, val) {
@@ -75,6 +75,18 @@ export default new Vuex.Store({
         await firebase.owner.add(ownerData)
         window.getApp.$emit('TOGGLE_PROGRESS_DIALOG')
         window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Add owner success ", color: 'success' })
+      } catch (error) {
+        window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Error on add owner: " + error, color: 'error' })
+        window.getApp.$emit('TOGGLE_PROGRESS_DIALOG')
+        console.log(error)
+      }
+    },
+
+    async addNewInstance({ commit }, instanceData) {
+      try {
+        await firebase.instance.add(instanceData)
+        window.getApp.$emit('TOGGLE_PROGRESS_DIALOG')
+        window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Add instance success ", color: 'success' })
       } catch (error) {
         window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Error on add owner: " + error, color: 'error' })
         window.getApp.$emit('TOGGLE_PROGRESS_DIALOG')

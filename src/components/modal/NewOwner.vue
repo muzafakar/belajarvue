@@ -46,8 +46,8 @@
                 />
               </v-flex>
               <v-flex xs12>
-                <v-text-field
-                  textarea
+                <v-textarea
+                  outline
                   name="address"
                   label="Address"
                   required
