@@ -12,11 +12,15 @@ const config = {
 firebase.initializeApp(config);
 
 const auth = firebase.auth()
+const dbBatch = firebase.firestore().batch()
 const owner = firebase.firestore().collection('owner')
-const instance = firebase.firestore().collection('instance')
+const tvkabel = firebase.firestore().collection('tvkabel')
+const customer = firebase.firestore().collection('customer_dummy')
 
 export {
+    dbBatch,
     owner,
-    instance,
+    tvkabel,
+    customer,
     auth
 }

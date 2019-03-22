@@ -39,7 +39,7 @@ export default {
   },
   created() {
     window.getApp.$on("TOOLBAR_TITLE", title => {
-      if (title === "instance" || title === "owner") {
+      if (title === "TV Kabel" || title === "Owner") {
         this.showFab = true;
       } else {
         this.showFab = false;

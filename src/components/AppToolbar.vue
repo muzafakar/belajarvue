@@ -63,7 +63,7 @@ export default {
   },
   created() {
     window.getApp.$on("TOOLBAR_TITLE", title => {
-      this.toolbarTitle = title.charAt(0).toUpperCase() + title.slice(1);
+      this.toolbarTitle = title
     });
   }
 };

@@ -10,7 +10,7 @@
     </v-toolbar>
 
     <v-list>
-      <v-list-tile v-for="item in items" :key="item.key" @click="navigateTo(item.direction)">
+      <v-list-tile v-for="item in items" :key="item.key" @click="navigateTo(item)">
         <v-list-tile-action>
           <v-icon>{{item.icon}}</v-icon>
         </v-list-tile-action>
@@ -40,17 +40,16 @@ export default {
         direction: "owner"
       },
       {
-        title: "Instance",
+        title: "TV Kabel",
         icon: "domain",
-        direction: "instance"
+        direction: "tvkabel"
       }
     ]
   }),
   methods: {
-    navigateTo(destination) {
-      console.log("destination: " + destination);
-      window.getApp.$emit("TOOLBAR_TITLE", destination);
-      this.$router.push("/" + destination);
+    navigateTo(menu) {
+      window.getApp.$emit("TOOLBAR_TITLE", menu.title);
+      this.$router.push("/" + menu.direction);
     },
     toggleDrawerMini() {
       console.log("mini drawer action");

@@ -5,7 +5,7 @@ import Login from '../views/Login.vue'
 // SEPARATED (PAGE)
 import Dashboard from '@/components/page/Dashboard'
 import Owner from '@/components/page/Owner'
-import Instance from '@/components/page/Instance'
+import TVKabel from '@/components/page/TVKabel'
 
 Vue.use(Router)
 
@@ -41,9 +41,9 @@ const router = new Router({
           component: Owner,
         },
         {
-          path: '/instance',
-          name: 'Instance',
-          component: Instance,
+          path: '/tvkabel',
+          name: 'TV Kabel',
+          component: TVKabel,
         }
       ]
     },
