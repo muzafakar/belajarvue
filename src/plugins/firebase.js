@@ -11,16 +11,20 @@ const config = {
 };
 firebase.initializeApp(config);
 
-const auth = firebase.auth()
+const login = function (user) {
+    return firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+}
+
+
 const dbBatch = firebase.firestore().batch()
-const owner = firebase.firestore().collection('owner')
-const tvkabel = firebase.firestore().collection('tvkabel')
-const customer = firebase.firestore().collection('customer_dummy')
+const cOwner = firebase.firestore().collection('owner')
+const cTvKabel = firebase.firestore().collection('tvkabel')
+const cCustomer = firebase.firestore().collection('customer_dummy')
 
 export {
     dbBatch,
-    owner,
-    tvkabel,
-    customer,
-    auth
+    cOwner,
+    cTvKabel,
+    cCustomer,
+    login
 }

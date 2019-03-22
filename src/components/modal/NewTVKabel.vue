@@ -224,12 +224,12 @@ export default {
         address: this.instance.address,
         channelCount: parseInt(this.instance.channelCount),
         cost: parseInt(this.instance.cost),
-        paymentRange: [instance.paymentStart, instance.paymentEnd],
+        paymentRange: [this.instance.paymentStart, this.instance.paymentEnd],
         workerFee: parseInt(this.instance.workerFee),
         isFined: this.isDenda,
-        fineCharge: parseInt(this.instance.fineCharge)
+        fineCharge: parseInt(this.instance.fineCharge),
+        timestamp: new Date()
       };
-
 
       this.$store.dispatch("addNewInstance", newInstance);
     },

@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router/router';
-const firebase = require('../plugins/firebase')
 import createPersistedState from 'vuex-persistedstate'
+const firebase = require('../plugins/firebase')
 
 Vue.use(Vuex)
 
@@ -54,15 +54,15 @@ export default new Vuex.Store({
   },
 
   actions: {
-    async userLogin({ commit }, authData) {
+    async userLogin({ commit }, user) {
       try {
-        const auth = await firebase.auth.signInWithEmailAndPassword(authData.email, authData.password)
+        const auth = await firebase.login(user)
         commit('loginProcedure', auth.user)
         window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Assalamu'alaikum, " + auth.user.email + " :)", color: 'success' })
       } catch (error) {
         sessionStorage
-        window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Login Failed, check email and password!", color: 'error' })
         console.log("login error")
+        window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Login Failed, check email and password!", color: 'error' })
       }
     },
 
@@ -71,100 +71,121 @@ export default new Vuex.Store({
       window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Loged Out", color: 'info' })
     },
 
-    fetchOwner() {
+    async fetchOwner({ commit }) {
       console.log('fetching remote data')
-      this.commit('saveOwner', [])
-      firebase.owner.get().then(snapshot => {
-        let owners = []
-        snapshot.forEach(doc => {
-          let owner = doc.data()
-          owner.id = doc.id
-          owners.push(owner)
-        })
-        this.commit('saveOwner', owners)
-      }).catch(error => {
-        console.log(error)
-      })
-    },
-
-    async addNewOwner({ commit }, ownerData) {
+      commit('saveOwner', []) // Clearing the state
       try {
-        await firebase.owner.add(ownerData)
-        window.getApp.$emit('TOGGLE_PROGRESS_DIALOG')
-        window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Add owner success ", color: 'success' })
+        const owners = await firebase.cOwner.get()
+        let arr = []
+        owners.forEach(doc => {
+          let o = doc.data()
+          o.id = doc.id
+          arr.push(o)
+        })
+        commit('saveOwner', arr)
       } catch (error) {
-        window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Error on add owner: " + error, color: 'error' })
-        window.getApp.$emit('TOGGLE_PROGRESS_DIALOG')
         console.log(error)
       }
     },
-    
-    async addNewInstance({ commit, state }, instanceData) {
+
+    async addNewOwner({ commit, state }, newOwner) {
+      var snackbarMsg = ""
+      var snackbarClr = ""
+      try {
+        const owners = state.owner
+        const createdOwner = await firebase.cOwner.add(newOwner)
+        let owner = newOwner
+        owner.id = createdOwner.id
+        owners.push(owner)
+
+        commit('saveOwner', [])
+        commit('saveOwner', owners)
+        snackbarMsg = newOwner.name + ' added as owner'
+        snackbarClr = 'success'
+      } catch (error) {
+        snackbarMsg = 'Error occured while adding owner, reason: \n' + error
+        snackbarClr = 'error'
+        console.log(error)
+      }
+      window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: snackbarMsg, color: snackbarClr })
+      window.getApp.$emit('TOGGLE_PROGRESS_DIALOG')
+    },
+
+    async addNewInstance({ dispatch, commit, state }, tvKabelData) {
+      var snackbarMsg = ''
+      var snackbarClr = ''
       const dusuns = state.tDusun
       const workers = state.tWorker
       const customers = state.tCustomer
 
       const dusunNames = []
-      const dusunId = []
+      const dusunIds = []
       try {
-        window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', "instance")
-        const createdInstance = await firebase.instance.add(instanceData)
-        const instanceId = createdInstance.id
+        // 1
+        window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', 'tv kabel information')
+        const newTvKabel = await firebase.cTvKabel.add(tvKabelData)
+        const tvKabelSubCol = firebase.cTvKabel.doc(newTvKabel.id) // reusable for remaining steps
 
-        // Inserting Dusun
-        for (let i = 1; i < dusuns.length; i++) {
-          const newDusun = {
-            name: dusuns[i][0],
+        // 2 adding the dusuns
+        for (let d = 0; d < dusuns.length; d++) {
+          const dusun = {
+            name: dusuns[d][0],
             timestamp: new Date()
           }
-          const createdDusun = await firebase.instance.doc(instanceId).collection('dusun').add(newDusun)
-          window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', "dusun " + i + ' of ' + (dusuns.length - 1))
-
-          dusunNames.push(newDusun.name)
-          dusunId.push(createdDusun.id)
+          const newDusun = await tvKabelSubCol.collection('dusun').add(dusun)
+          window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', 'dusun ' + (d + 1) + ' of ' + dusuns.length)
+          dusunNames.push(dusuns[d][0])
+          dusunIds.push(newDusun.id)
+          console.log(JSON.stringify(dusun));
         }
 
-        // Inserting Worker
-        for (let i = 1; i < workers.length; i++) {
-          const areaId = []
-          for (let j = 2; j < workers[i].length; j++) {
-            const indexId = dusunNames.indexOf(workers[i][j])
-            areaId.push({ id: dusunId[indexId], name: workers[i][j] })
+        // 3 adding the workers
+        for (let w = 0; w < workers.length; w++) {
+          const areas = []
+          for (let a = 2; a < workers[w].length; a++) {
+            if (workers[w][a] !== null) {
+              let indexId = dusunNames.indexOf(workers[w][a])
+              areas.push({ id: dusunIds[indexId], name: dusunNames[indexId] })
+            }
           }
 
-          const newWorker = {
-            name: workers[i][0],
-            phone: workers[i][1],
-            area: areaId,
-            timestamp: new Date()
-          }
-
-          await firebase.instance.doc(instanceId).collection('worker').add(newWorker)
-          window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', "dusun " + i + ' of ' + (workers.length - 1))
-        }
-
-        // Inserting Customer
-        for (let i = 1; i < customers.length; i++) {
-          const indexId = dusunNames.indexOf(customers[i][2])
-          const newCustomer = {
-            name: customers[i][0],
-            phone: customers[i][1],
-            dusun: { id: dusunId[indexId], name: customers[i][2] },
+          const worker = {
+            name: workers[w][0],
+            phone: workers[w][1],
+            area: areas,
             timestamp: new Date()
           }
 
-          await firebase.instance.doc(instanceId).collection('customer').add(newCustomer)
-          window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', "customer " + i + ' of ' + (customers.length - 1))
+          await tvKabelSubCol.collection('worker').add(worker)
+          window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', 'worker ' + (w + 1) + ' of ' + workers.length)
         }
 
-        window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Operation Complete", color: 'success' })
+        // 4 adding the customers
+        for (let c = 0; c < customers.length; c++) {
+          let indexId = dusunNames.indexOf(customers[c][2])
+          let dusun = { id: dusunIds[indexId], name: dusunNames[indexId] }
+          const customer = {
+            name: customers[c][0],
+            phone: customers[c][1],
+            dusun: dusun,
+            timestamp: new Date()
+          }
+          await tvKabelSubCol.collection('customer').add(customer)
+          window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', 'customer ' + (c + 1) + ' of ' + customers.length)
+        }
+
+        snackbarMsg = tvKabelData.name + ' added with ' + dusuns.length + " dusun, " + workers.length + ' worker, ' + customers.length + ' customers.'
+        snackbarClr = 'success'
       } catch (error) {
-        window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: "Error on add instance: " + error, color: 'error' })
-        console.log(error)
+        snackbarMsg = 'Error occured while creating tv kabel, reason: \n' + error
+        snackbarClr = 'error'
+        console.log(error);
       }
+
       commit('cacheDusun', [])
       commit('cacheWorker', [])
       commit('cacheCustomer', [])
+      window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: snackbarMsg, color: snackbarClr })
       window.getApp.$emit('TOGGLE_PROGRESS_DIALOG')
     }
   }
