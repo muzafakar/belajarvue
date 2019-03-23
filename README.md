@@ -1,4 +1,4 @@
-# belajarvue
+# Belajar VUEJS
 
 ## Project setup
 ```
@@ -27,3 +27,6 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### My Personal Website
+[muzadev.wev.id](https://muzadev.web.id)
