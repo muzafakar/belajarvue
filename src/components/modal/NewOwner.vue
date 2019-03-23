@@ -55,26 +55,6 @@
                   type="text"
                 />
               </v-flex>
-              <v-flex xs12>
-                <v-text-field
-                  name="password"
-                  label="Password"
-                  required
-                  type="password"
-                  v-model="password"
-                  hint="tolong kasi regex"
-                />
-              </v-flex>
-              <v-flex xs12>
-                <v-text-field
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  required
-                  v-model="confirmPassword"
-                  hint="tolong kasi regex"
-                />
-              </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
@@ -94,26 +74,13 @@
 
 
 <script>
-import { validationMixin } from "vuelidate";
-import { required, maxLength, email } from "vuelidate/lib/validators";
-
 export default {
-  mixins: [validationMixin],
-
-  validations: {
-    name: { required, maxLength: maxLength(25) },
-    address: { required, maxLength: maxLength(75) },
-    email: { required, email }
-  },
-
   data: () => ({
     formDialog: false,
     progressDialog: false,
     name: "",
     address: "",
     email: "",
-    password: "",
-    confirmPassword: "",
     phone: ""
   }),
 
@@ -127,8 +94,7 @@ export default {
         email: this.email,
         address: this.address,
         phone: this.phone,
-        password: this.password,
-        confirmPassword: this.confirmPassword
+        timestamp: new Date()
       };
 
       this.$store.dispatch("addNewOwner", newOwner);

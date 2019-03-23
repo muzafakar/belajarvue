@@ -101,20 +101,19 @@
                     v-model="instance.workerFee"
                   />
                 </v-flex>
-                <v-flex xs6/>
-                <v-flex xs4>
-                  <v-checkbox label="Mengenakan Denda" v-model="isDenda" color="primary"/>
-                </v-flex>
-                <v-flex xs8>
-                  <v-text-field
-                    :disabled="!isDenda"
-                    name="denda"
-                    label="Denda Per-bulan"
-                    hint="*berlaku setiap bulan"
-                    mask="######"
-                    prepend-icon="money"
-                    v-model="instance.fineCharge"
-                  ></v-text-field>
+                <v-flex xs6>
+                  <v-layout align-center>
+                    <v-checkbox label="Denda" v-model="isDenda" color="primary"/>
+                    <v-text-field
+                      :disabled="!isDenda"
+                      name="denda"
+                      label="Denda Per-bulan"
+                      hint="*berlaku setiap bulan"
+                      mask="######"
+                      prepend-icon="money"
+                      v-model="instance.fineCharge"
+                    />
+                  </v-layout>
                 </v-flex>
               </v-layout>
             </v-container>

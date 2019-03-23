@@ -33,7 +33,7 @@
       </template>
 
       <template v-slot:item="props">
-        <v-flex xs6 lg6 @click="showOwnerDetail(props.item)">
+        <v-flex xs12 sm6 md4 lg6 @click="showOwnerDetail(props.item)">
           <v-card>
             <v-card-title>
               <h4>{{ props.item.name }}</h4>

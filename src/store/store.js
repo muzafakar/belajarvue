@@ -11,15 +11,20 @@ export default new Vuex.Store({
 
   state: {
     owner: [],
+    tvkabel: [],
     tDusun: [],
     tCustomer: [],
     tWorker: []
   },
 
   mutations: {
-    saveOwner(state, val) {
-      state.owner = val
+    saveOwner(state, arr) {
+      state.owner = arr
     },
+    saveTvKabel(state, arr) {
+      state.tvkabel = arr
+    },
+
     logoutProcedure(state) {
       // delete all session key-value here
       // set state to null or false
@@ -117,6 +122,7 @@ export default new Vuex.Store({
       const dusuns = state.tDusun
       const workers = state.tWorker
       const customers = state.tCustomer
+      const tvKabelArr = state.tvkabel
 
       const dusunNames = []
       const dusunIds = []
@@ -125,6 +131,10 @@ export default new Vuex.Store({
         window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', 'tv kabel information')
         const newTvKabel = await firebase.cTvKabel.add(tvKabelData)
         const tvKabelSubCol = firebase.cTvKabel.doc(newTvKabel.id) // reusable for remaining steps
+        tvKabelData.id = newTvKabel.id
+        tvKabelArr.push(tvKabelData)
+        commit('saveTvKabel', [])
+        commit('saveTvKabel', tvKabelArr)
 
         // 2 adding the dusuns
         for (let d = 0; d < dusuns.length; d++) {

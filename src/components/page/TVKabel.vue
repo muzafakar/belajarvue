@@ -1,16 +1,16 @@
 <template>
   <v-container fluid grid-list-lg>
-    <InstanceTable/>
+    <TVKabelIterator/>
     <NewTVKabel/>
   </v-container>
 </template>
 
 <script>
-import InstanceTable from "../tables/InstanceTable";
+import TVKabelIterator from "../tables/TVKabelIterator";
 import NewTVKabel from "../modal/NewTVKabel";
 export default {
   components: {
-    InstanceTable,
+    TVKabelIterator,
     NewTVKabel
   }
 };
