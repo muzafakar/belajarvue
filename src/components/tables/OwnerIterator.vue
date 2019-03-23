@@ -33,13 +33,13 @@
       </template>
 
       <template v-slot:item="props">
-        <v-flex xs12 sm6 md4 lg6 @click="showOwnerDetail(props.item)">
+        <v-flex xs12 sm6 md4 lg6>
           <v-card>
             <v-card-title>
               <h4>{{ props.item.name }}</h4>
               <v-spacer/>
-              <v-btn icon>
-                <v-icon>edit</v-icon>
+              <v-btn icon @click="showOwnerDetail(props.item)">
+                <v-icon>open_in_new</v-icon>
               </v-btn>
             </v-card-title>
             <v-divider></v-divider>

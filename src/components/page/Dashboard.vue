@@ -14,21 +14,23 @@
         <StatCard v-bind:obj="appUserStat" :count="9999"/>
       </v-flex>
       <v-flex xs12 class="mb-4">
-        <Table v-bind:obj="ownerTable" :data="$store.state.owner"/>
+        <TableOwner/>
       </v-flex>
       <v-flex xs12>
-        <Table v-bind:obj="tvkabelTable" :data="$store.state.owner"/>
+        <TableTvKabel/>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-import Table from "../tables/Table";
+import TableOwner from "../tables/TableOwner";
+import TableTvKabel from "../tables/TableTvKabel";
 import StatCard from "../stats/StatCard";
 export default {
   components: {
-    Table,
+    TableOwner,
+    TableTvKabel,
     StatCard
   },
 
@@ -41,7 +43,7 @@ export default {
     tvKabelStat: {
       title: "TV Kabel",
       icon: "domain",
-      color: "amber darken-2"
+      color: "amber darken-3"
     },
     customerStat: {
       title: "Customer",
@@ -52,26 +54,6 @@ export default {
       title: "App User",
       icon: "phone_android",
       color: "red"
-    },
-    ownerTable: {
-      title: "Owner",
-      color: "cyan",
-      headers: [
-        { text: "Name", align: "left", value: "name" },
-        { text: "Phone", align: "left", value: "phone" },
-        { text: "Email", align: "left", value: "email" },
-        { text: "Address", align: "left", value: "address" }
-      ]
-    },
-    tvkabelTable: {
-      title: "TV Kabel",
-      color: "amber darken-2",
-      headers: [
-        { text: "Name", align: "left", value: "name" },
-        { text: "Phone", align: "left", value: "phone" },
-        { text: "Email", align: "left", value: "email" },
-        { text: "Address", align: "left", value: "address" }
-      ]
     }
   })
 };

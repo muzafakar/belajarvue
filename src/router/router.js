@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
+import TVKabelDetail from '../views/TVKabelDetail.vue'
 // SEPARATED (PAGE)
 import Dashboard from '@/components/page/Dashboard'
 import Owner from '@/components/page/Owner'
@@ -26,9 +27,7 @@ const router = new Router({
       path: '/',
       name: 'Home',
       component: Home,
-      meta: {
-        requiresAuth: true
-      },
+      meta: { requiresAuth: true },
       children: [
         {
           path: '/dashboard',
@@ -47,6 +46,15 @@ const router = new Router({
         }
       ]
     },
+    {
+      path: '/tvkabeldetail',
+      name: 'TV Kabel',
+      component: TVKabelDetail,
+      meta: { requiresAuth: true },
+      children: [
+
+      ]
+    }
 
   ]
 })

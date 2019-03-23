@@ -1,10 +1,10 @@
 <template>
   <v-card class="elevation-3">
-    <v-toolbar flat :color="obj.color" dark>
+    <v-toolbar flat color="cyan" dark>
       <v-btn icon @click="fetchRemoteData">
         <v-icon>refresh</v-icon>
       </v-btn>
-      <v-toolbar-title>{{obj.title}}</v-toolbar-title>
+      <v-toolbar-title>Owner</v-toolbar-title>
       <v-spacer/>
       <v-flex xs4>
         <v-text-field
@@ -20,7 +20,12 @@
       </v-flex>
     </v-toolbar>
 
-    <v-data-table :headers="obj.headers" :items="data" :search="search">
+    <v-data-table
+      :headers="headers"
+      :items="$store.state.owner"
+      :search="search"
+      :loading="loading"
+    >
       <template v-slot:items="props">
         <td>{{props.item.name}}</td>
         <td>{{props.item.email}}</td>
@@ -33,26 +38,28 @@
 
 <script>
 export default {
-  name: "Table",
-  props: {
-    obj: Object,
-    data: Array
-  },
   data: () => ({
-    search: ""
+    search: "",
+    loading: false,
+    headers: [
+      { text: "Name", align: "left", value: "name" },
+      { text: "Email", align: "left", value: "email" },
+      { text: "Phone", align: "left", value: "phone" },
+      { text: "Address", align: "left", value: "address" }
+    ]
   }),
 
   methods: {
     fetchRemoteData() {
-      console.log("table title: " + this.obj.title);
-      if (this.obj.title === "Owner") {
-        this.$store.dispatch("fetchOwner");
-      } else if (this.title === "Customer") {
-        // this.$store.dispatch("fetchCustomer");
-      } else if (this.title === "TV Kabel") {
-        // this.$store.dispatch("fetchTvKabel");
-      }
+      this.loading = true;
+      this.$store.dispatch("fetchOwner");
     }
+  },
+
+  created() {
+    window.getApp.$on("TOGGLE_TABLE_LOADING", () => {
+      this.loading = false;
+    });
   }
 };
 </script>

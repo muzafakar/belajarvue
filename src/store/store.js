@@ -91,6 +91,7 @@ export default new Vuex.Store({
       } catch (error) {
         console.log(error)
       }
+      window.getApp.$emit('TOGGLE_TABLE_LOADING')
     },
 
     async addNewOwner({ commit, state }, newOwner) {
