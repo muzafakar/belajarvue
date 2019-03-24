@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-toolbar flat color="primary" dark class="mb-4">
+    <v-toolbar flat color="cyan" dark class="mb-4">
       <v-btn icon @click="fetchRemoteOwnerData">
         <v-icon>refresh</v-icon>
       </v-btn>

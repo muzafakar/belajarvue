@@ -47,8 +47,8 @@ export default {
     }
   },
   created() {
-    window.getApp.$on("TOOLBAR_TITLE", title => {
-      if (title === "TV Kabel" || title === "Owner") {
+    window.getApp.$on("TOOLBAR_TITLE", tb => {
+      if (tb.title === "TV Kabel" || title.title === "Owner") {
         this.showFab = true;
       } else {
         this.showFab = false;

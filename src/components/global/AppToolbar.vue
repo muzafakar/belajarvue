@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar color="primary" dark app fixed>
+  <v-toolbar :color="toolbarColor" dark app fixed>
     <v-toolbar-side-icon @click.stop="handleDrawerToggle"></v-toolbar-side-icon>
     <v-toolbar-title>{{toolbarTitle}}</v-toolbar-title>
     <v-spacer/>
@@ -28,6 +28,7 @@
 export default {
   data: () => ({
     toolbarTitle: "",
+    toolbarColor: "primary",
     items: [
       {
         title: "Profile",
@@ -58,12 +59,13 @@ export default {
       console.log(action);
     }
   },
-  mounted(){
-    this.toolbarTitle = this.$route.name
+  mounted() {
+    this.toolbarTitle = this.$route.name;
   },
   created() {
-    window.getApp.$on("TOOLBAR_TITLE", title => {
-      this.toolbarTitle = title
+    window.getApp.$on("TOOLBAR_TITLE", toolbarProps => {
+      this.toolbarTitle = toolbarProps.title;
+      this.toolbarColor = toolbarProps.color;
     });
   }
 };

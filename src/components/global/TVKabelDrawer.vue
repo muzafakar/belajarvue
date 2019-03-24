@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer fixed app width="250" :mini-variant="mini" v-model="drawer">
-    <v-toolbar color="primary" dark flat>
+    <v-toolbar :color="drawerColor" dark flat>
       <v-avatar size="36" @click="backToDashboard">
         <!-- <img src="../assets/logo.svg" alt="admin" height="36"> -->
         <v-btn icon>
@@ -31,32 +31,41 @@ export default {
   data: () => ({
     mini: false,
     drawer: true,
+    drawerColor: "primary",
     items: [
       {
         title: "Detail",
         icon: "domain",
-        direction: "main"
+        direction: "main",
+        color: "primary"
       },
       {
         title: "Dusun",
         icon: "location_city",
-        direction: "dusun"
+        direction: "dusun",
+        color: "yellow darken-3"
       },
       {
         title: "Customer",
         icon: "group",
-        direction: "customer"
+        direction: "customer",
+        color: "green darken-3"
       },
       {
         title: "Worker",
         icon: "supervised_user_circle",
-        direction: "worker"
+        direction: "worker",
+        color: "cyan darken-3"
       }
     ]
   }),
   methods: {
     navigateTo(menu) {
-      window.getApp.$emit("TOOLBAR_TITLE", menu.title);
+      this.drawerColor = menu.color;
+      window.getApp.$emit("TOOLBAR_TITLE", {
+        title: menu.title,
+        color: menu.color
+      });
       this.$router.push("/tvkabel/" + menu.direction);
     },
     toggleDrawerMini() {

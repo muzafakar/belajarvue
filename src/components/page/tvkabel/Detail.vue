@@ -36,7 +36,7 @@ export default {
     worker: {
       title: "Worker",
       icon: "supervised_user_circle",
-      color: "blue darken-3"
+      color: "cyan darken-3"
     }
   }),
 

@@ -1,12 +1,7 @@
 <template>
   <v-navigation-drawer fixed app width="250" :mini-variant="mini" v-model="drawer">
-    <v-toolbar color="primary" dark flat>
-      <v-avatar size="36" @click="toggleDrawerMini">
-        <img src="../../assets/logo.svg" alt="admin" height="36">
-      </v-avatar>
-      <v-toolbar-title class="ml-0 pl-3">
-        <span class="hidden-sm-and-down">Eiuran Admin</span>
-      </v-toolbar-title>
+    <v-toolbar :color="drawerColor" dark flat>
+      <v-toolbar-title class="ml-0 pl-3">Eiuran Admin</v-toolbar-title>
     </v-toolbar>
 
     <v-list>
@@ -28,27 +23,35 @@ export default {
   data: () => ({
     mini: false,
     drawer: true,
+    drawerColor: "primary",
     items: [
       {
         title: "Dashboard",
         icon: "dashboard",
-        direction: "main"
+        direction: "main",
+        color: "primary"
       },
       {
         title: "Owner",
         icon: "face",
-        direction: "owner"
+        direction: "owner",
+        color: "cyan"
       },
       {
         title: "TV Kabel",
         icon: "domain",
-        direction: "tvkabel"
+        direction: "tvkabel",
+        color: "amber darken-3"
       }
     ]
   }),
   methods: {
     navigateTo(menu) {
-      window.getApp.$emit("TOOLBAR_TITLE", menu.title);
+      this.drawerColor = menu.color;
+      window.getApp.$emit("TOOLBAR_TITLE", {
+        title: menu.title,
+        color: menu.color
+      });
       this.$router.push("/dashboard/" + menu.direction);
     },
     toggleDrawerMini() {
