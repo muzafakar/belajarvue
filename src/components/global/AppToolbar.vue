@@ -63,9 +63,9 @@ export default {
     this.toolbarTitle = this.$route.name;
   },
   created() {
-    window.getApp.$on("TOOLBAR_TITLE", toolbarProps => {
-      this.toolbarTitle = toolbarProps.title;
-      this.toolbarColor = toolbarProps.color;
+    window.getApp.$on("TOOLBAR_TITLE", props => {
+      this.toolbarTitle = props.title;
+      this.toolbarColor = props.color;
     });
   }
 };

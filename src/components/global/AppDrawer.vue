@@ -38,23 +38,22 @@ export default {
         title: "Owner",
         icon: "face",
         direction: "owner",
-        color: "cyan"
+        color: "cyan",
+        fab: true
       },
       {
         title: "TV Kabel",
         icon: "domain",
         direction: "tvkabel",
-        color: "amber darken-3"
+        color: "amber darken-3",
+        fab: true
       }
     ]
   }),
   methods: {
     navigateTo(menu) {
       this.drawerColor = menu.color;
-      window.getApp.$emit("TOOLBAR_TITLE", {
-        title: menu.title,
-        color: menu.color
-      });
+      window.getApp.$emit("TOOLBAR_TITLE", menu);
       this.$router.push("/dashboard/" + menu.direction);
     },
     toggleDrawerMini() {

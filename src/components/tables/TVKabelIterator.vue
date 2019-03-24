@@ -76,9 +76,8 @@ export default {
   methods: {
     showDetail(tvkabel) {
       const index = this.$store.state.tvkabel.indexOf(tvkabel);
-      this.$store.commit("saveTvKabelIndex", index);
-      console.log("index: " + index);
-      console.log("ownerDetail: " + JSON.stringify(tvkabel));
+      this.$store.commit("cacheTvKabelIndex", index);
+      this.$store.commit("cacheViewedTvKabel", tvkabel);
       this.$router.push("/tvkabel/main");
     },
     fetchRemoteOwnerData() {

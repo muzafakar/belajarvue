@@ -15,6 +15,8 @@ export default new Vuex.Store({
     tDusun: [],
     tCustomer: [],
     tWorker: [],
+    tvKabelIndex: null,
+    viewedTvKabel: {}
   },
 
   mutations: {
@@ -73,6 +75,14 @@ export default new Vuex.Store({
     cacheWorker(state, workerArr) {
       state.tWorker = workerArr
       window.getApp.$emit('CACHE_SUCCESS')
+    },
+
+    cacheTvKabelIndex(state, index) {
+      state.tvKabelIndex = index
+    },
+
+    cacheViewedTvKabel(state, tvkabel) {
+      state.viewedTvKabel = tvkabel
     }
   },
 
@@ -141,21 +151,18 @@ export default new Vuex.Store({
       const dusuns = state.tDusun
       const workers = state.tWorker
       const customers = state.tCustomer
-      const tvKabelArr = state.tvkabel
 
-      // const dusunNames = []
-      // const dusunIds = []
+      const dusunNames = []
+      const dusunIds = []
       try {
         // 1
         window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', 'tv kabel information')
         const newTvKabel = await firebase.cTvKabel.add(tvKabelData)
         const tvKabelSubCol = firebase.cTvKabel.doc(newTvKabel.id) // reusable for remaining steps
         tvKabelData.id = newTvKabel.id
-        tvKabelArr.push(tvKabelData)
-        commit('saveTvKabel', [])
-        commit('saveTvKabel', tvKabelArr)
 
         // 2 adding the dusuns
+        const dusunArray = []
         for (let d = 0; d < dusuns.length; d++) {
           const dusun = {
             name: dusuns[d][0],
@@ -163,12 +170,18 @@ export default new Vuex.Store({
           }
           let newDusun = await tvKabelSubCol.collection('dusun').add(dusun)
           window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', 'dusun ' + (d + 1) + ' of ' + dusuns.length)
-          dusunNames.push(dusuns[d][0])
-          dusunIds.push(newDusun.id)
+
+          dusun['id'] = newDusun.id //set id ke object dusun baru
+          dusunNames.push(dusun.name) // simpan nama dusun untuk worker dan customer
+          dusunIds.push(newDusun.id) // simpan id dusun untuk worker dan customer
+          dusunArray.push(dusun) // simpan object dusun ke dusunArray
           console.log(JSON.stringify(dusun));
         }
+        tvKabelData['dusun'] = dusunArray //simpan object dusunArray ke dalam object tvKabelData
+
 
         // 3 adding the workers
+        const workerArray = []
         for (let w = 0; w < workers.length; w++) {
           const areas = []
           for (let a = 2; a < workers[w].length; a++) {
@@ -185,11 +198,15 @@ export default new Vuex.Store({
             timestamp: new Date()
           }
 
-          await tvKabelSubCol.collection('worker').add(worker)
+          let newWorker = await tvKabelSubCol.collection('worker').add(worker)
+          worker['id'] = newWorker.id
+          workerArray.push(worker)
           window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', 'worker ' + (w + 1) + ' of ' + workers.length)
         }
+        tvKabelData['worker'] = workerArray
 
         // 4 adding the customers
+        const customerArray = []
         for (let c = 0; c < customers.length; c++) {
           let indexId = dusunNames.indexOf(customers[c][2])
           let dusun = { id: dusunIds[indexId], name: dusunNames[indexId] }
@@ -199,10 +216,14 @@ export default new Vuex.Store({
             dusun: dusun,
             timestamp: new Date()
           }
-          await tvKabelSubCol.collection('customer').add(customer)
+          let newCustomer = await tvKabelSubCol.collection('customer').add(customer)
+          customer['id'] = newCustomer.id
+          customerArray.push(customer)
           window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', 'customer ' + (c + 1) + ' of ' + customers.length)
         }
+        tvKabelData['customer'] = customerArray
 
+        commit('pushTvKabel', tvKabelData)
         snackbarMsg = tvKabelData.name + ' added with ' + dusuns.length + " dusun, " + workers.length + ' worker, ' + customers.length + ' customers.'
         snackbarClr = 'success'
       } catch (error) {

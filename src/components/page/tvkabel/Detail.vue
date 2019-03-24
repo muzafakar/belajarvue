@@ -1,15 +1,14 @@
 <template>
   <v-container fluid grid-list-md>
     <v-layout row wrap>
-      <h1>{{$store.state.tvkabel[index]}}</h1>
       <v-flex xs12 sm6 md4 lg3 class="mb-4">
-        <StatCard v-bind:obj="dusun" :count="$store.state.tvkabel[index].dusunCount"/>
+        <StatCard v-bind:obj="dusun" :count="obj.dusunCount"/>
       </v-flex>
       <v-flex xs12 sm6 md4 lg3 class="mb-4">
-        <StatCard v-bind:obj="customer" :count="$store.state.tvkabel[index].customerCount"/>
+        <StatCard v-bind:obj="customer" :count="obj.customerCount"/>
       </v-flex>
       <v-flex xs12 sm6 md4 lg3 class="mb-4">
-        <StatCard v-bind:obj="worker" :count="$store.state.tvkabel[index].workerCount"/>
+        <StatCard v-bind:obj="worker" :count="obj.workerCount"/>
       </v-flex>
     </v-layout>
   </v-container>
@@ -22,7 +21,7 @@ export default {
     StatCard
   },
   data: () => ({
-    index: null,
+    obj: {},
     dusun: {
       title: "Dusun",
       icon: "location_city",
@@ -39,9 +38,13 @@ export default {
       color: "cyan darken-3"
     }
   }),
-
+  mounted() {
+    console.log("mounted");
+    this.obj = this.$store.state.viewedTvKabel;
+    console.log(this.obj.name);
+  },
   created() {
-    this.index = this.$store.state.tvkabelindex;
+    console.log("created");
   }
 };
 </script>

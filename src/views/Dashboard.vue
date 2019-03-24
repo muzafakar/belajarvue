@@ -6,7 +6,7 @@
       <v-container fluid>
         <!-- Change to router-view -->
         <v-flex xs12>
-          <router-view></router-view>
+          <router-view/>
           <v-fab-transition>
             <v-btn
               fixed
@@ -14,7 +14,7 @@
               fab
               bottom
               right
-              color="primary"
+              :color="fabColor"
               v-show="showFab"
               @click.stop="showDialog"
             >
@@ -37,7 +37,9 @@ export default {
     AppDrawer
   },
   data: () => ({
-    showFab: false
+    showFab: false,
+    fabColor: "",
+    transitionName: "fade"
   }),
   methods: {
     showDialog() {
@@ -47,9 +49,10 @@ export default {
     }
   },
   created() {
-    window.getApp.$on("TOOLBAR_TITLE", tb => {
-      if (tb.title === "TV Kabel" || title.title === "Owner") {
+    window.getApp.$on("TOOLBAR_TITLE", props => {
+      if (props.fab) {
         this.showFab = true;
+        this.fabColor = props.color;
       } else {
         this.showFab = false;
       }

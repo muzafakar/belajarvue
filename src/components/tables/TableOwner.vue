@@ -62,10 +62,6 @@ export default {
     window.getApp.$on("TOGGLE_TABLE_LOADING", () => {
       this.loading = false;
     });
-
-    const obj = this.$store.state.owner;
-    const ownerArray = Object.values(obj);
-    console.log("arr:" + ownerArray);
   }
 };
 </script>

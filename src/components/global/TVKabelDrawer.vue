@@ -43,29 +43,29 @@ export default {
         title: "Dusun",
         icon: "location_city",
         direction: "dusun",
-        color: "yellow darken-3"
+        color: "yellow darken-3",
+        fab: true
       },
       {
         title: "Customer",
         icon: "group",
         direction: "customer",
-        color: "green darken-3"
+        color: "green darken-3",
+        fab: true
       },
       {
         title: "Worker",
         icon: "supervised_user_circle",
         direction: "worker",
-        color: "cyan darken-3"
+        color: "cyan darken-3",
+        fab: true
       }
     ]
   }),
   methods: {
     navigateTo(menu) {
       this.drawerColor = menu.color;
-      window.getApp.$emit("TOOLBAR_TITLE", {
-        title: menu.title,
-        color: menu.color
-      });
+      window.getApp.$emit("TOOLBAR_TITLE", menu);
       this.$router.push("/tvkabel/" + menu.direction);
     },
     toggleDrawerMini() {
@@ -73,6 +73,8 @@ export default {
       this.mini = !this.mini;
     },
     backToDashboard() {
+      this.$store.commit("cacheTvKabelIndex", null);
+      this.$store.commit("cacheViewedTvKabel", {});
       this.$router.push("/dashboard/tvkabel");
     }
   },

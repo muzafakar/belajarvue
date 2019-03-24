@@ -14,7 +14,7 @@
               fab
               bottom
               right
-              color="primary"
+              :color="fabColor"
               v-show="showFab"
               @click.stop="showDialog"
             >
@@ -37,7 +37,8 @@ export default {
     TVKabelDrawer
   },
   data: () => ({
-    showFab: false
+    showFab: false,
+    fabColor: ""
   }),
   methods: {
     showDialog() {
@@ -46,10 +47,11 @@ export default {
       window.getApp.$emit(pageName);
     }
   },
-  created() {
-    window.getApp.$on("TOOLBAR_TITLE", title => {
-      if (title === "TV Kabel" || title === "Owner") {
+  createdmounted() {
+    window.getApp.$on("TOOLBAR_TITLE", props => {
+      if (props.fab) {
         this.showFab = true;
+        this.fabColor = props.color;
       } else {
         this.showFab = false;
       }
