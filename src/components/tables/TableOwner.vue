@@ -50,11 +50,8 @@ export default {
 
   methods: {
     fetchRemoteData() {
-      // this.loading = true;
-      // this.$store.dispatch("fetchOwner");
-      const id = "iniid";
-      const arr = "ini array";
-      this.$store.dispatch("insertDusun", [id, arr]);
+      this.loading = true;
+      this.$store.dispatch("fetchOwner");
     }
   },
 
