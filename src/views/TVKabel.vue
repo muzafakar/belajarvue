@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <div>
     <AppToolbar/>
     <TVKabelDrawer/>
     <v-content>
@@ -24,7 +24,7 @@
         </v-flex>
       </v-container>
     </v-content>
-  </v-app>
+  </div>
 </template>
 
 <script>

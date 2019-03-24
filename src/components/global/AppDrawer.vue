@@ -1,6 +1,9 @@
 <template>
   <v-navigation-drawer fixed app width="250" :mini-variant="mini" v-model="drawer">
     <v-toolbar :color="drawerColor" dark flat>
+      <v-btn icon @click="toggleDrawerMini">
+        <v-icon>polymer</v-icon>
+      </v-btn>
       <v-toolbar-title class="ml-0 pl-3">Eiuran Admin</v-toolbar-title>
     </v-toolbar>
 

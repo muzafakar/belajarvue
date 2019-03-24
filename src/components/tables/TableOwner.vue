@@ -50,8 +50,11 @@ export default {
 
   methods: {
     fetchRemoteData() {
-      this.loading = true;
-      this.$store.dispatch("fetchOwner");
+      // this.loading = true;
+      // this.$store.dispatch("fetchOwner");
+      const id = "iniid";
+      const arr = "ini array";
+      this.$store.dispatch("insertDusun", [id, arr]);
     }
   },
 
@@ -59,6 +62,10 @@ export default {
     window.getApp.$on("TOGGLE_TABLE_LOADING", () => {
       this.loading = false;
     });
+
+    const obj = this.$store.state.owner;
+    const ownerArray = Object.values(obj);
+    console.log("arr:" + ownerArray);
   }
 };
 </script>
