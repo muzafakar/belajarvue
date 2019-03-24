@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import OwnerIterator from "../tables/OwnerIterator";
-import NewOwner from "../modal/NewOwner";
+import OwnerIterator from "@/components/tables/OwnerIterator";
+import NewOwner from "@/components/modal/NewOwner";
 export default {
   components: {
     OwnerIterator,

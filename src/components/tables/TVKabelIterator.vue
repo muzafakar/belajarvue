@@ -38,7 +38,7 @@
             <v-card-title>
               <h4>{{ props.item.name }}</h4>
               <v-spacer/>
-              <v-btn icon @click="showOwnerDetail(props.item)">
+              <v-btn icon @click="showDetail(props.item)">
                 <v-icon>open_in_new</v-icon>
               </v-btn>
             </v-card-title>
@@ -74,9 +74,12 @@ export default {
     }
   }),
   methods: {
-    showOwnerDetail(name) {
-      console.log("ownerDetail: " + JSON.stringify(name));
-      this.$router.push("/tvkabeldetail");
+    showDetail(tvkabel) {
+      const index = this.$store.state.tvkabel.indexOf(tvkabel);
+      this.$store.commit("saveTvKabelIndex", index);
+      console.log("index: " + index);
+      console.log("ownerDetail: " + JSON.stringify(tvkabel));
+      this.$router.push("/tvkabel/main");
     },
     fetchRemoteOwnerData() {
       this.$store.dispatch("fetchOwner");

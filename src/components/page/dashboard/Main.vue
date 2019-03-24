@@ -24,9 +24,9 @@
 </template>
 
 <script>
-import TableOwner from "../tables/TableOwner";
-import TableTvKabel from "../tables/TableTvKabel";
-import StatCard from "../stats/StatCard";
+import TableOwner from "@/components/tables/TableOwner";
+import TableTvKabel from "@/components/tables/TableTvKabel";
+import StatCard from "@/components/stats/StatCard";
 export default {
   components: {
     TableOwner,

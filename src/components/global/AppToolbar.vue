@@ -6,7 +6,7 @@
     <v-menu offset-y transition="slide-y-transition">
       <v-btn icon large flat slot="activator">
         <v-avatar size="30px">
-          <img src="../assets/muza.png" alt="admin_profile_picture">
+          <img src="../../assets/muza.png" alt="admin_profile_picture">
         </v-avatar>
       </v-btn>
       <v-list>

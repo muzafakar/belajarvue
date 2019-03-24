@@ -14,7 +14,9 @@ export default new Vuex.Store({
     tvkabel: [],
     tDusun: [],
     tCustomer: [],
-    tWorker: []
+    tWorker: [],
+    tvkabeldetail: null,
+    tvkabelindex: null
   },
 
   mutations: {
@@ -23,6 +25,10 @@ export default new Vuex.Store({
     },
     saveTvKabel(state, arr) {
       state.tvkabel = arr
+    },
+
+    saveTvKabelIndex(state, index) {
+      state.tvkabelindex = index
     },
 
     logoutProcedure(state) {
@@ -35,7 +41,7 @@ export default new Vuex.Store({
       // save all session key-value here
       // set state to any or true
       localStorage.setItem('user', JSON.stringify(user))
-      router.push('/dashboard')
+      router.push('/dashboard/main')
       if (state.owner.length == 0) {
         this.dispatch('fetchOwner') // check wheter we already have owner on localStorage or not
       }

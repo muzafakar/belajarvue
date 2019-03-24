@@ -227,7 +227,10 @@ export default {
         workerFee: parseInt(this.instance.workerFee),
         isFined: this.isDenda,
         fineCharge: parseInt(this.instance.fineCharge),
-        timestamp: new Date()
+        timestamp: new Date(),
+        dusunCount: this.$store.state.tDusun.length,
+        customerCount: this.$store.state.tCustomer.length,
+        workerCount: this.$store.state.tWorker.length
       };
 
       this.$store.dispatch("addNewInstance", newInstance);

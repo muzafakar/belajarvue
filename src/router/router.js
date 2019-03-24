@@ -1,12 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../views/Home.vue'
+import Dashboard from '@/views/Dashboard.vue'
 import Login from '../views/Login.vue'
-import TVKabelDetail from '../views/TVKabelDetail.vue'
-// SEPARATED (PAGE)
-import Dashboard from '@/components/page/Dashboard'
-import Owner from '@/components/page/Owner'
-import TVKabel from '@/components/page/TVKabel'
+import TVKabelP from '../views/TVKabel.vue'
+// Dashboard (PAGE)
+import Main from '@/components/page/dashboard/Main'
+import Owner from '@/components/page/dashboard/Owner'
+import TVKabel from '@/components/page/dashboard/TVKabel'
+
+// TVKabel (PAGE)
+import Detail from '@/components/page/tvkabel/Detail'
+
 
 Vue.use(Router)
 
@@ -16,43 +20,62 @@ const router = new Router({
   routes: [
     {
       path: '*',
-      redirect: '/dashboard'
+      redirect: '/dashboard/main'
     },
     {
       path: '/login',
-      name: 'login',
+      name: 'Login',
       component: Login
     },
     {
-      path: '/',
-      name: 'Home',
-      component: Home,
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard,
       meta: { requiresAuth: true },
       children: [
         {
-          path: '/dashboard',
+          path: '/dashboard/main',
           name: 'Dashboard',
-          component: Dashboard,
+          component: Main,
         },
         {
-          path: '/owner',
+          path: '/dashboard/owner',
           name: 'Owner',
           component: Owner,
         },
         {
-          path: '/tvkabel',
+          path: '/dashboard/tvkabel',
           name: 'TV Kabel',
-          component: TVKabel,
+          component: TVKabel
         }
       ]
     },
     {
-      path: '/tvkabeldetail',
+      path: '/tvkabel',
       name: 'TV Kabel',
-      component: TVKabelDetail,
+      component: TVKabelP,
       meta: { requiresAuth: true },
       children: [
-
+        {
+          path: '/tvkabel/main',
+          name: 'TV Kabel Detail',
+          component: Detail
+        },
+        {
+          path: '/tvkabel/dusun',
+          name: 'TV Kabel Detail',
+          component: Detail
+        },
+        {
+          path: '/tvkabel/customer',
+          name: 'TV Kabel Detail',
+          component: Detail
+        },
+        {
+          path: '/tvkabel/worker',
+          name: 'TV Kabel Detail',
+          component: Detail
+        },
       ]
     }
 

@@ -1,11 +1,14 @@
 <template>
   <v-navigation-drawer fixed app width="250" :mini-variant="mini" v-model="drawer">
     <v-toolbar color="primary" dark flat>
-      <v-avatar size="36" @click="toggleDrawerMini">
-        <img src="../assets/logo.svg" alt="admin" height="36">
+      <v-avatar size="36" @click="backToDashboard">
+        <!-- <img src="../assets/logo.svg" alt="admin" height="36"> -->
+        <v-btn icon>
+          <v-icon>arrow_back</v-icon>
+        </v-btn>
       </v-avatar>
       <v-toolbar-title class="ml-0 pl-3">
-        <span class="hidden-sm-and-down">Vue Material</span>
+        <span>TV Kabel Info</span>
       </v-toolbar-title>
     </v-toolbar>
 
@@ -30,30 +33,38 @@ export default {
     drawer: true,
     items: [
       {
-        title: "Dashboard",
-        icon: "dashboard",
-        direction: "dashboard"
-      },
-      {
-        title: "Owner",
-        icon: "face",
-        direction: "owner"
-      },
-      {
-        title: "TV Kabel",
+        title: "Detail",
         icon: "domain",
-        direction: "tvkabel"
+        direction: "main"
+      },
+      {
+        title: "Dusun",
+        icon: "location_city",
+        direction: "dusun"
+      },
+      {
+        title: "Customer",
+        icon: "group",
+        direction: "customer"
+      },
+      {
+        title: "Worker",
+        icon: "supervised_user_circle",
+        direction: "worker"
       }
     ]
   }),
   methods: {
     navigateTo(menu) {
       window.getApp.$emit("TOOLBAR_TITLE", menu.title);
-      this.$router.push("/" + menu.direction);
+      this.$router.push("/tvkabel/" + menu.direction);
     },
     toggleDrawerMini() {
       console.log("mini drawer action");
       this.mini = !this.mini;
+    },
+    backToDashboard() {
+      this.$router.push("/dashboard/tvkabel");
     }
   },
   created() {

@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import TVKabelIterator from "../tables/TVKabelIterator";
-import NewTVKabel from "../modal/NewTVKabel";
+import TVKabelIterator from "@/components/tables/TVKabelIterator";
+import NewTVKabel from "@/components/modal/NewTVKabel";
 export default {
   components: {
     TVKabelIterator,

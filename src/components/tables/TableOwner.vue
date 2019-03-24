@@ -6,9 +6,8 @@
       </v-btn>
       <v-toolbar-title>Owner</v-toolbar-title>
       <v-spacer/>
-      <v-flex xs4>
+      <v-toolbar-items>
         <v-text-field
-          width="60%"
           v-model="search"
           prepend-icon="search"
           clearable
@@ -17,7 +16,7 @@
           single-line
           hide-details
         />
-      </v-flex>
+      </v-toolbar-items>
     </v-toolbar>
 
     <v-data-table

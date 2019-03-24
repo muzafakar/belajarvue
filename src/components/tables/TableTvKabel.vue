@@ -7,6 +7,7 @@
       <v-toolbar-title>TV Kabel</v-toolbar-title>
       <v-spacer/>
       <v-toolbar-items>
+        <v-btn flat small @click="expand = !expand">{{expand ? 'MX' : 'SX'}}</v-btn>
         <v-text-field
           v-model="search"
           prepend-icon="search"
@@ -16,7 +17,6 @@
           single-line
           hide-details
         />
-        <v-btn flat small @click="expand = !expand">{{expand ? 'MX' : 'SX'}}</v-btn>
       </v-toolbar-items>
     </v-toolbar>
 
@@ -35,7 +35,7 @@
           <td>{{props.item.cost}}</td>
           <td>{{props.item.isFined ? props.item.fineCharge : '-'}}</td>
           <td>{{props.item.workerFee}} %</td>
-          <td>{{props.item.paymentRange[0] +' - '+ props.item.paymentRange[1]}}</td> -->
+          <td>{{props.item.paymentRange[0] +' - '+ props.item.paymentRange[1]}}</td>-->
         </tr>
       </template>
 
@@ -61,7 +61,7 @@ export default {
     headers: [
       { text: "Name", align: "left", value: "name" },
       { text: "Owner", align: "left", value: "owner" },
-      { text: "Address", align: "left", value: "address" },
+      { text: "Address", align: "left", value: "address" }
       // { text: "Channel", align: "left", value: "channel" },
       // { text: "Iuran", align: "left", value: "iuran" },
       // { text: "Denda", align: "left", value: "denda" },

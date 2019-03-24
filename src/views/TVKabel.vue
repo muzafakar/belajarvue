@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import AppToolbar from "../components/AppToolbar";
-import TVKabelDrawer from "../components/TVKabelDrawer";
+import AppToolbar from "@/components/global/AppToolbar";
+import TVKabelDrawer from "@/components/global/TVKabelDrawer";
 
 export default {
   components: {

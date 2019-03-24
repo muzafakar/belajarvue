@@ -8,7 +8,16 @@
         <v-flex xs12>
           <router-view></router-view>
           <v-fab-transition>
-            <v-btn fixed dark fab bottom right color="primary" v-show="showFab" @click.stop="showDialog">
+            <v-btn
+              fixed
+              dark
+              fab
+              bottom
+              right
+              color="primary"
+              v-show="showFab"
+              @click.stop="showDialog"
+            >
               <v-icon>add</v-icon>
             </v-btn>
           </v-fab-transition>
@@ -19,8 +28,8 @@
 </template>
 
 <script>
-import AppToolbar from "../components/AppToolbar";
-import AppDrawer from "../components/AppDrawer";
+import AppToolbar from "@/components/global/AppToolbar";
+import AppDrawer from "@/components/global/AppDrawer";
 
 export default {
   components: {

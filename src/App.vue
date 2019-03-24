@@ -7,9 +7,9 @@
         bottom
         right
         multi-line
-        :timeout="3000"
-        :color="snackbar.color"
         auto-height
+        :timeout="5000"
+        :color="snackbar.color"
       >
         {{snackbar.text}}
         <v-btn flat color="white" @click.native="snackbar.show = false">
