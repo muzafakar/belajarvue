@@ -7,14 +7,13 @@
         <v-icon>edit</v-icon>
       </v-btn>
     </v-card-title>
+    <v-divider/>
 
     <v-list two-line>
       <v-list-tile v-for="item in items" :key="item.key">
         <v-list-tile-content>
           <v-list-tile-sub-title>{{item.text}}</v-list-tile-sub-title>
           <v-list-tile-title>{{item.value}}</v-list-tile-title>
-
-          <v-divider></v-divider>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
@@ -30,6 +29,7 @@ export default {
   mounted() {
     const obj = this.$store.state.viewedTvKabel;
     this.items.push({ text: "Nama Tv Kabel", value: obj.name });
+    this.items.push({ text: "Id", value: obj.id });
     this.items.push({ text: "Owner", value: obj.ownerId });
     this.items.push({ text: "Alamat", value: obj.address });
     this.items.push({ text: "Iuran", value: "Rp. " + obj.cost });

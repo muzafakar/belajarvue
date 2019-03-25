@@ -10,6 +10,9 @@ import TVKabel from '@/components/page/dashboard/TVKabel'
 
 // TVKabel (PAGE)
 import Detail from '@/components/page/tvkabel/Detail'
+import Dusun from '@/components/page/tvkabel/Dusun'
+import Customer from '@/components/page/tvkabel/Customer'
+import Worker from '@/components/page/tvkabel/Worker'
 
 
 Vue.use(Router)
@@ -63,18 +66,18 @@ const router = new Router({
         },
         {
           path: '/tvkabel/dusun',
-          name: 'TV Kabel Detail',
-          component: Detail
+          name: 'TV Kabel Dusun',
+          component: Dusun
         },
         {
           path: '/tvkabel/customer',
-          name: 'TV Kabel Detail',
-          component: Detail
+          name: 'TV Kabel Customer',
+          component: Customer
         },
         {
           path: '/tvkabel/worker',
-          name: 'TV Kabel Detail',
-          component: Detail
+          name: 'TV Kabel Worker',
+          component: Worker
         },
       ]
     }
