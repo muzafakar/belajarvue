@@ -3,12 +3,12 @@ import 'firebase/firestore'
 import 'firebase/auth'
 
 const config = {
-    apiKey: "AIzaSyDVvndvTPQ-Qm5NspAj1j8It9G49ww0n3I",
-    authDomain: "vue-firebase-35cf4.firebaseapp.com",
-    databaseURL: "https://vue-firebase-35cf4.firebaseio.com",
-    projectId: "vue-firebase-35cf4",
-    storageBucket: "vue-firebase-35cf4.appspot.com",
-    messagingSenderId: "266039567922"
+    apiKey: "AIzaSyAdOz4MJVDkHXF6Ibc590BUg77PZP8PLrY",
+    authDomain: "eiuran.firebaseapp.com",
+    databaseURL: "https://eiuran.firebaseio.com",
+    projectId: "eiuran",
+    storageBucket: "eiuran.appspot.com",
+    messagingSenderId: "442442606176"
 };
 firebase.initializeApp(config);
 
