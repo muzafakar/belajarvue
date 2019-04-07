@@ -11,7 +11,7 @@
         :timeout="5000"
         :color="snackbar.color"
       >
-        {{snackbar.text}}
+        {{snackbar.message}}
         <v-btn flat color="white" @click.native="snackbar.show = false">
           <v-icon>close</v-icon>
         </v-btn>
@@ -25,13 +25,13 @@ export default {
   data: () => ({
     snackbar: {
       show: false,
-      text: "",
+      message: "",
       color: ""
     }
   }),
   created() {
     window.getApp = this;
-    window.getApp.$on("SHOW_SNACKBAR", snackbarData => {
+    window.getApp.$on("EVENT_SNACKBAR", snackbarData => {
       this.snackbar = snackbarData;
     });
   }

@@ -1,6 +1,6 @@
 <template>
-  <v-navigation-drawer width="250px" app class="blue-grey darken-3" hide-overlay>
-    <v-toolbar color="blue-grey darken-3" dark flat dense>
+  <v-navigation-drawer width="250px" app class="blue-grey darken-4" hide-overlay>
+    <v-toolbar color="blue-grey darken-3" dark flat>
       <img src="../../assets/dummy_logo.png" height="40px" width="25px">
       <v-toolbar-title class="ml-0 pl-3">Eiuran Admin</v-toolbar-title>
     </v-toolbar>

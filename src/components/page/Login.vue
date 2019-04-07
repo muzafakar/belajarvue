@@ -1,10 +1,10 @@
 <template>
-  <v-app id="login" class="primary">
+  <div id="login" class="light-blue darken-1">
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4 lg4>
-            <v-card class="elevation-1 pa-3">
+            <v-card class="elevation-5 pa-3">
               <v-card-text>
                 <div class="layout column align-center">
                   <v-avatar size="150" color="red">
@@ -31,14 +31,20 @@
               </v-form>
 
               <v-card-actions>
-                <v-btn block :loading="loading" color="primary" @click="login()">Login</v-btn>
+                <v-btn
+                  block
+                  :loading="loading"
+                  color="light-blue darken-1"
+                  dark
+                  @click="login()"
+                >Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
         </v-layout>
       </v-container>
     </v-content>
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -54,13 +60,13 @@ export default {
   methods: {
     login() {
       this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-        console.log(this.auth.email);
-        console.log(this.auth.password);
-        this.$store.dispatch("userLogin", this.auth);
-      }, 1500);
+      this.$store.dispatch("login", this.auth);
     }
+  },
+  created() {
+    window.getApp.$on("EVENT_SNACKBAR", snackbarData => {
+      this.loading = false;
+    });
   }
 };
 </script>

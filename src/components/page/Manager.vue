@@ -1,8 +1,21 @@
 <template>
   <div>
     <Toolbar title="Manager"/>
-    <Drawer v-bind:items="items" v-bind:subheader="subheader" :showBack="true"/>
+    <Drawer v-bind:items="drawerItem" v-bind:subheader="subheader" :showBack="true"/>
     <v-content>
+      <v-tabs
+        centered
+        v-model="active"
+        color="light-blue darken-1"
+        dark
+        icons-and-text
+        slider-color="blue-grey darken-4"
+      >
+        <v-tab v-for="item in tabItem" :key="item.key" @click="navigateTo(item.destination)">
+          {{item.title}}
+          <v-icon>{{item.icon}}</v-icon>
+        </v-tab>
+      </v-tabs>
       <router-view/>
     </v-content>
   </div>
@@ -18,7 +31,7 @@ export default {
   },
   data: () => ({
     subheader: "{{Nama TV Kabel}}",
-    items: [
+    tabItem: [
       { icon: "info", title: "Detail", destination: "/instance/detail" },
       {
         icon: "account_circle",
@@ -31,7 +44,16 @@ export default {
         title: "Worker",
         destination: "/instance/worker"
       }
+    ],
+    drawerItem: [
+      { icon: "dashboard", title: "Dashboard", destination: "/dashboard" },
+      { icon: "domain", title: "Instance", destination: "/instance" }
     ]
-  })
+  }),
+  methods: {
+    navigateTo(destination) {
+      this.$router.push(destination);
+    }
+  }
 };
 </script>
