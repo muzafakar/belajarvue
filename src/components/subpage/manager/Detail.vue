@@ -54,12 +54,7 @@ export default {
     }
   }),
   mounted() {
-    console.log("mounted");
-    this.obj = this.$store.state.viewedTvKabel;
-    console.log(this.obj.name);
-  },
-  created() {
-    console.log("created");
+    this.obj = this.$store.state.viewTvKabel;
   }
 };
 </script>

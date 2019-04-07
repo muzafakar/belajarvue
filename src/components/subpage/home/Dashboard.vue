@@ -14,10 +14,10 @@
         <StatCard v-bind:obj="appUserStat" :count="9999"/>
       </v-flex>
       <v-flex xs12 class="mb-4">
-        <TableOwner/>
+        <TableTvKabel/>
       </v-flex>
       <v-flex xs12>
-        <TableTvKabel/>
+        <TableOwner/>
       </v-flex>
     </v-layout>
   </v-container>

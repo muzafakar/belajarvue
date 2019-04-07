@@ -1,101 +1,92 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Dashboard from '@/views/Dashboard.vue'
-import Login from '../views/Login.vue'
-import TVKabelP from '../views/TVKabel.vue'
-// Dashboard (PAGE)
-import Main from '@/components/page/dashboard/Main'
-import Owner from '@/components/page/dashboard/Owner'
-import TVKabel from '@/components/page/dashboard/TVKabel'
+//PAGE
+import Login from '@/components/page/Login'
+import Home from '@/components/page/Home'
+import IntanceManager from '@/components/page/Manager'
 
-// TVKabel (PAGE)
-import Detail from '@/components/page/tvkabel/Detail'
-import Dusun from '@/components/page/tvkabel/Dusun'
-import Customer from '@/components/page/tvkabel/Customer'
-import Worker from '@/components/page/tvkabel/Worker'
-
+//SUB PAGE
+import Dashboard from '@/components/subpage/home/dashboard'
+import Instance from '@/components/subpage/home/instance'
+import Detail from '@/components/subpage/manager/detail'
+import Customer from '@/components/subpage/manager/customer'
+import Dusun from '@/components/subpage/manager/dusun'
+import Worker from '@/components/subpage/manager/worker'
 
 Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
   routes: [
     {
       path: '*',
-      redirect: '/dashboard/main'
+      redirect: '/dashboard'
     },
     {
-      path: '/login',
-      name: 'Login',
+      path: '/auth',
+      name: 'login',
       component: Login
     },
     {
       path: '/dashboard',
-      name: 'Dashboard',
-      component: Dashboard,
+      name: 'home',
+      component: Home,
       meta: { requiresAuth: true },
       children: [
         {
-          path: '/dashboard/main',
-          name: 'Dashboard',
-          component: Main,
+          path: '/dahsboard',
+          name: 'dashboard',
+          component: Dashboard
         },
         {
-          path: '/dashboard/owner',
-          name: 'Owner',
-          component: Owner,
-        },
-        {
-          path: '/dashboard/tvkabel',
-          name: 'TV Kabel',
-          component: TVKabel
+          path: '/instance',
+          name: 'intance',
+          component: Instance
         }
       ]
     },
     {
-      path: '/tvkabel',
-      name: 'TV Kabel',
-      component: TVKabelP,
+      path: '/instance/detail',
+      name: 'instance manager',
+      component: IntanceManager,
       meta: { requiresAuth: true },
       children: [
         {
-          path: '/tvkabel/main',
-          name: 'TV Kabel Detail',
+          path: '/instance/detail',
+          name: 'detail',
           component: Detail
         },
         {
-          path: '/tvkabel/dusun',
-          name: 'TV Kabel Dusun',
+          path: '/instance/dusun',
+          name: 'dusun',
           component: Dusun
         },
         {
-          path: '/tvkabel/customer',
-          name: 'TV Kabel Customer',
-          component: Customer
-        },
-        {
-          path: '/tvkabel/worker',
-          name: 'TV Kabel Worker',
+          path: '/instance/worker',
+          name: 'worker',
           component: Worker
         },
+        {
+          path: '/instance/customer',
+          name: 'customer',
+          component: Customer
+        }
       ]
     }
-
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  const isRequiresAuth = to.matched.some(x => x.meta.requiresAuth)
-  const isLogedIn = JSON.parse(localStorage.getItem('user'))
-  console.log('isLogedIn: ' + (isLogedIn ? isLogedIn.email : 'no user'))
+// router.beforeEach((to, from, next) => {
+//   const isRequiresAuth = to.matched.some(x => x.meta.requiresAuth)
+//   const isLogedIn = JSON.parse(localStorage.getItem('user'))
+//   console.log('isLogedIn: ' + (isLogedIn ? isLogedIn.email : 'no user'))
 
-  if (isRequiresAuth && !isLogedIn) {
-    next('/login')
-  } else if (isRequiresAuth && isLogedIn) {
-    next()
-  } else {
-    next()
-  }
-})
+//   if (isRequiresAuth && !isLogedIn) {
+//     next('/login')
+//   } else if (isRequiresAuth && isLogedIn) {
+//     next()
+//   } else {
+//     next()
+//   }
+// })
 export default router;

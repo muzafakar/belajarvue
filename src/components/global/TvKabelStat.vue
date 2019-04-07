@@ -27,7 +27,7 @@ export default {
     items: []
   }),
   mounted() {
-    const obj = this.$store.state.viewedTvKabel;
+    const obj = this.$store.state.viewTvKabel;
     this.items.push({ text: "Nama Tv Kabel", value: obj.name });
     this.items.push({ text: "Id", value: obj.id });
     this.items.push({ text: "Owner", value: obj.ownerId });

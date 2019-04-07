@@ -12,31 +12,58 @@ export default new Vuex.Store({
   state: {
     owner: [],
     tvkabel: [],
+
     tDusun: [],
     tCustomer: [],
     tWorker: [],
+
     tvKabelIndex: null,
-    viewedTvKabel: {}
+    viewedTvKabel: null,
+
+    viewTvKabel: null,
+    viewIndex: null
   },
 
   mutations: {
-    logoutProcedure(state) {
+    /*******************************/
+    // authentication mutation     //
+    /*******************************/
+    async logoutProcedure(state) {
       // delete all session key-value here
       // set state to null or false
-      localStorage.removeItem('user')
-      router.push('/login')
-    },
+      try {
+        await firebase.auth.signOut()
+        localStorage.removeItem('user')
+        router.push('/login')
+      } catch (error) {
+        console.log('error on sign out, reason: ' + error);
 
-    loginProcedure(state, user) {
-      // save all session key-value here
-      // set state to any or true
-      localStorage.setItem('user', JSON.stringify(user))
-      router.push('/dashboard/main')
-      if (state.owner.length == 0) {
-        this.dispatch('fetchOwner') // check wheter we already have owner on localStorage or not
       }
     },
 
+    cleanLogout({ commit }) {
+      localStorage.removeItem('vuex')
+      commit('logoutProcedure')
+    },
+
+    loginProcedure(state, user) {
+      /* save all session key-value here
+       set state to any or true*/
+      localStorage.setItem('user', JSON.stringify(user))
+      if (state.owner.length == 0) {
+        this.dispatch('fetchOwner') // check wheter we already have owner on localStorage or not
+      }
+
+      if (state.tvkabel.length == 0) {
+        this.dispatch('fetchInstance')
+      }
+
+      router.push('/dashboard/main')
+    },
+
+    /*******************************/
+    // owner mutation              //
+    /*******************************/
     pushOwner(state, obj) {
       state.owner.push(obj)
     },
@@ -49,8 +76,15 @@ export default new Vuex.Store({
       state.owner.splice(index, 1)
     },
 
+    /*******************************/
+    // tv kabel mutation           //
+    /*******************************/
     pushTvKabel(state, obj) {
       state.tvkabel.push(obj)
+    },
+
+    replaceTvKabel(state, obj) {
+      state.tvkabel.splice(state.tvKabelIndex, 0, obj) // (index, elementCount, obj)
     },
 
     resetTvKabel(state) {
@@ -61,6 +95,9 @@ export default new Vuex.Store({
       state.tvkabel.splice(index, 1)
     },
 
+    /*******************************/
+    // cache insert mutation       //
+    /*******************************/
     cacheDusun(state, dusunArr) {
       state.tDusun = dusunArr
       window.getApp.$emit('CACHE_SUCCESS')
@@ -83,6 +120,17 @@ export default new Vuex.Store({
 
     cacheViewedTvKabel(state, tvkabel) {
       state.viewedTvKabel = tvkabel
+    },
+
+
+    /*******************************/
+    // cache view tvkabel mutation //
+    /*******************************/
+    cacheViewTvKabel(state, obj) {
+      state.viewTvKabel = obj
+    },
+    cacheViewIndex(state, index) {
+      state.viewIndex = index
     }
   },
 
@@ -238,68 +286,48 @@ export default new Vuex.Store({
       window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: snackbarMsg, color: snackbarClr })
       window.getApp.$emit('TOGGLE_PROGRESS_DIALOG')
     },
-    // async insertDusun({ state, commit, dispatch }, ref) {
-    //   try {
-    //     const dusunNames = []
-    //     const dusunIds = []
-    //     for (let d = 0; d < dusuns.length; d++) {
-    //       const dusun = {
-    //         name: dusuns[d][0],
-    //         timestamp: new Date()
-    //       }
-    //       let newDusun = await ref.collection('dusun').add(state.tDusun)
-    //       window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', 'dusun ' + (d + 1) + ' of ' + dusuns.length)
-    //       dusunNames.push(dusuns[d][0])
-    //       dusunIds.push(newDusun.id)
-    //       console.log(JSON.stringify(dusun));
-    //     }
-    //   } catch (error) {
 
-    //   }
-    //   dispatch('insertWorker', { ref: ref, dusunIds: dusunIds, dusunNames: dusunNames })
-    //   commit('cacheDusun', [])
-    // },
+    async fetchInstance({ commit }) {
+      commit('resetTvKabel')
+      console.log('fetching tv kabel data');
+      try {
+        const instance = await firebase.cTvKabel.get()
+        instance.forEach(doc => {
+          let tvk = doc.data()
+          tvk.id = doc.id
+          commit('pushTvKabel', tvk)
+        })
+      } catch (error) {
+        console.log(error);
+        window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: 'error on fetching tv kabel data, reason: ' + error, color: 'error' })
+      }
+    },
 
-    // async insertWorker({ state, commit }, obj) { //{ref, dusunIds, dusunNames}
-    //   for (let w = 0; w < state.tWorker.length; w++) {
-    //     const areas = []
-    //     for (let a = 2; a < state.tWorker[w].length; a++) {
-    //       if (state.tWorker[w][a] !== null) {
-    //         let indexId = obj.dusunNames.indexOf(state.tWorker[w][a])
-    //         areas.push({ id: obj.dusunIds[indexId], name: obj.dusunNames[indexId] })
-    //       }
-    //     }
+    async fetchDusun({ commit, state }) {
+      try {
+        const viewTvKabel = state.viewTvKabel
+        const dusuns = await firebase.cTvKabel.doc(viewTvKabel.id).collection('dusun').get()
+        const dusunArr = []
+        dusuns.forEach(doc => {
+          let d = doc.data()
+          d.id = doc.id
+          dusunArr.push(d)
+        })
+        viewTvKabel.dusun = dusunArr
+        commit('cacheViewTvKabel', viewTvKabel)
+        // TODO splice tvkabel array with new obj
+        console.log(viewTvKabel.dusun);
+      } catch (error) {
+        window.getApp.$emit('SHOW_SNACKBAR', { show: true, text: 'error fetching dusun data, reason: ' + error, color: 'error' })
+        console.log('error fetching dusun data, reason: ' + error);
+      }
+    },
+    async fetchWorker({ commit, state }, instanceId) {
 
-    //     const worker = {
-    //       name: state.tWorker[w][0],
-    //       phone: state.tWorker[w][1],
-    //       area: areas,
-    //       timestamp: new Date()
-    //     }
+    },
+    async fetchCustomer({ commit, state }, instanceId) {
 
-    //     await obj.ref.collection('worker').add(worker)
-    //     window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', 'worker ' + (w + 1) + ' of ' + workers.length)
-    //   }
-
-    //   commit('cacheWorker', [])
-    // },
-
-    // async insertCustomer({ state, commit }, obj) { //{ref, dusunIds, dusunNames}
-    //   for (let c = 0; c < state.tCustomer.length; c++) {
-    //     let indexId = obj.dusunNames.indexOf(state.tCustomer[c][2])
-    //     let dusun = { id: obj.dusunIds[indexId], name: obj.dusunNames[indexId] }
-    //     const customer = {
-    //       name: state.tCustomer[c][0],
-    //       phone: state.tCustomer[c][1],
-    //       dusun: dusun,
-    //       timestamp: new Date()
-    //     }
-    //     await obj.ref.collection('customer').add(customer)
-    //     window.getApp.$emit('FIREBASE_ADD_ONE_DOCUMENT', 'customer ' + (c + 1) + ' of ' + state.tCustomer.length)
-    //   }
-
-    //   commit('cacheCustomer', [])
-    // }
+    }
   }
 
 })

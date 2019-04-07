@@ -1,5 +1,6 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/auth'
 
 const config = {
     apiKey: "AIzaSyDVvndvTPQ-Qm5NspAj1j8It9G49ww0n3I",
@@ -16,6 +17,8 @@ const login = function (user) {
 }
 
 
+
+const auth = firebase.auth()
 const dbBatch = firebase.firestore().batch()
 const cOwner = firebase.firestore().collection('owner')
 const cTvKabel = firebase.firestore().collection('tvkabel')
@@ -26,5 +29,6 @@ export {
     cOwner,
     cTvKabel,
     cCustomer,
-    login
+    login,
+    auth
 }
