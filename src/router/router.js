@@ -6,12 +6,12 @@ import Home from '@/components/page/Home'
 import IntanceManager from '@/components/page/Manager'
 
 //SUB PAGE
-import Dashboard from '@/components/subpage/home/dashboard'
-import Instance from '@/components/subpage/home/instance'
-import Detail from '@/components/subpage/manager/detail'
-import Customer from '@/components/subpage/manager/customer'
-import Dusun from '@/components/subpage/manager/dusun'
-import Worker from '@/components/subpage/manager/worker'
+import Dashboard from '@/components/subpage/home/Dashboard'
+import Instance from '@/components/subpage/home/Instance'
+import Detail from '@/components/subpage/manager/Detail'
+import Customer from '@/components/subpage/manager/Customer'
+import Dusun from '@/components/subpage/manager/Dusun'
+import Worker from '@/components/subpage/manager/Worker'
 
 Vue.use(Router)
 
@@ -34,7 +34,7 @@ const router = new Router({
       meta: { requiresAuth: true },
       children: [
         {
-          path: '/dahsboard',
+          path: '/dashboard',
           name: 'dashboard',
           component: Dashboard
         },

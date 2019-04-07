@@ -1,14 +1,3 @@
 <template>
-  <v-container grid-list-lg>
-    <TableCustomer/>
-  </v-container>
+  <h1>this is customer</h1>
 </template>
-
-<script>
-import TableCustomer from "@/components/tables/TableCustomer";
-export default {
-  components: {
-    TableCustomer
-  }
-};
-</script>

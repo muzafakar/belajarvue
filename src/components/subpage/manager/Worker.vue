@@ -1,14 +1,3 @@
 <template>
-  <v-container grid-list-lg>
-    <TableWorker/>
-  </v-container>
+  <h1>this is dusun</h1>
 </template>
-
-<script>
-import TableWorker from "@/components/tables/TableWorker";
-export default {
-  components: {
-    TableWorker
-  }
-};
-</script>
