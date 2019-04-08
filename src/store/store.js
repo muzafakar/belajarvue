@@ -145,7 +145,7 @@ export default new Vuex.Store({
         // inserting worker
         for (let w = 0; w < workers.length; w++) {
           let area = []
-          for (let a = 2; a < workers[w].length; a++) {
+          for (let a = 3; a < workers[w].length; a++) {
             if (workers[w][a] !== null) {
               area.push(dusunMap[workers[w][a]])
             }
@@ -153,7 +153,8 @@ export default new Vuex.Store({
 
           let obj = {
             name: workers[w][0],
-            phone: workers[w][1],
+            email: workers[w][1],
+            phone: workers[w][2],
             area: area,
             timestamp: new Date()
           }
@@ -164,7 +165,6 @@ export default new Vuex.Store({
 
         // inserting customer
         for (let c = 0; c < customers.length; c++) {
-          const element = customers[c];
           let obj = {
             name: customers[c][0],
             phone: customers[c][1],

@@ -3,7 +3,7 @@
     <v-container grid-list-xs>
       <v-card class="elevation-3">
         <v-toolbar dense flat color="blue-grey darken-3">
-          <v-flex xs4>
+          <v-flex xs3>
             <v-text-field
               placeholder="Search"
               v-model="search"

@@ -39,15 +39,15 @@ export default {
         destination: "customer" /* /instance/:id/customer */
       },
       {
-        icon: "location_city",
-        title: "Dusun",
-        destination: "dusun"
-      } /* /instance/:id/dusun */,
-      {
         icon: "supervised_user_circle",
         title: "Worker",
         destination: "worker" /* /instance/:id/worker */
       },
+      {
+        icon: "location_city",
+        title: "Dusun",
+        destination: "dusun"
+      } /* /instance/:id/dusun */,
       {
         icon: "money",
         title: "Payment",
