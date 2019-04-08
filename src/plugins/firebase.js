@@ -12,6 +12,16 @@ const config = {
 };
 firebase.initializeApp(config);
 
+firebase.firestore().enablePersistence().then(function () {
+    alert('database persistence enable')
+}).catch(function (err) {
+    if (err.code == 'failed-precondition') {
+        alert('Please just use one tab :)')
+    } else if (err.code == 'unimplemented') {
+        alert('This browser is not supported, please use other browser (eg: chrome, firefox)')
+    }
+})
+
 const login = function (user) {
     return firebase.auth().signInWithEmailAndPassword(user.email, user.password)
 }

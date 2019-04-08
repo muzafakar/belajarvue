@@ -1,7 +1,9 @@
 <template>
   <div>
+    <DialogNewInstance/>
+
     <v-layout align-center justify-start row fill-height class="ps-2 light-blue darken-1">
-      <v-btn flat icon color="white" @click="addInstance">
+      <v-btn flat icon color="white" @click="showDialog">
         <v-icon>add</v-icon>
       </v-btn>
       <v-flex xs4>
@@ -37,11 +39,7 @@
               <p>item</p>
               <p>item</p>
               <!-- <router-link to="/instance/detail/KJuda98sanxaKJAdun"> -->
-              <v-btn
-                color="blue-grey darken-3"
-                dark
-                @click="navigateToDetail(props.item.name)"
-              >detail</v-btn>
+              <v-btn color="blue-grey darken-3" dark @click="navigateToDetail(props.item.id)">detail</v-btn>
               <!-- </router-link> -->
             </v-card>
           </template>
@@ -52,7 +50,11 @@
 </template>
 
 <script>
+import DialogNewInstance from "@/components/global/DialogNewInstance";
 export default {
+  components: {
+    DialogNewInstance
+  },
   data: () => ({
     search: "",
     loading: false,
@@ -64,26 +66,31 @@ export default {
     ],
     items: [
       {
+        id: "Kasd9uinjkasdasd89",
         name: "Muzafakar Instance",
         owner: "Zulfakar",
         address: "Firebase"
       },
       {
+        id: "ASlinqoidask2e1208",
         name: "Toshiba",
         owner: "Zulfakar",
         address: "Firebase"
       },
       {
+        id: "Maosihdjn1oi2nmasd",
         name: "Ubuntu",
         owner: "Zulfakar",
         address: "Firebase"
       },
       {
+        id: "Akjasfdoid1n2kjadasd",
         name: "Kde Plasma",
         owner: "Zulfakar",
         address: "Firebase"
       },
       {
+        id: "Zoiahksdno1ui2jndmasoik",
         name: "Linux",
         owner: "Zulfakar",
         address: "Firebase"
@@ -94,12 +101,12 @@ export default {
     navigateToDetail(id) {
       this.$router.push({
         path: `/instance/${id}/detail`,
-        params: { id: id, name: 'iak' }
+        params: { id: id, name: "iak" }
       });
     },
 
-    addInstance() {
-      console.log("add instance");
+    showDialog() {
+      window.getApp.$emit("EVENT_NEW_INSTANCE_DIALOG");
     }
   }
 };
