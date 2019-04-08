@@ -3,16 +3,19 @@ import Router from 'vue-router'
 //PAGE
 import Login from '@/components/page/Login'
 import Home from '@/components/page/Home'
-import IntanceManager from '@/components/page/Manager'
+import InstanceManager from '@/components/page/Manager'
 
 //SUB PAGE
 import Dashboard from '@/components/subpage/home/Dashboard'
 import Instance from '@/components/subpage/home/Instance'
+import TableInstance from '@/components/global/table/TableInstance'
+
+// MANAGER PAGE
 import Detail from '@/components/subpage/manager/Detail'
 import Customer from '@/components/subpage/manager/Customer'
 import Dusun from '@/components/subpage/manager/Dusun'
 import Worker from '@/components/subpage/manager/Worker'
-import TableInstance from '@/components/global/TableInstance'
+import Payment from '@/components/subpage/manager/Payment'
 
 Vue.use(Router)
 
@@ -51,7 +54,7 @@ const router = new Router({
             {
               path: '/instance/:id/detail',
               name: 'instance manager',
-              component: IntanceManager,
+              component: InstanceManager,
               children: [{
                   path: '/instance/:id/detail',
                   name: 'detail',
@@ -71,7 +74,12 @@ const router = new Router({
                   path: '/instance/:id/customer',
                   name: 'customer',
                   component: Customer
-                }
+                },
+                {
+                  path: '/instance/:id/payment',
+                  name: 'payment',
+                  component: Payment
+                },
               ]
             }
           ]

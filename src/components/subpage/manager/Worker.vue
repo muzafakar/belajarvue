@@ -1,3 +1,14 @@
 <template>
-  <h1>this is worker</h1>
+  <div>
+    <WorkerTable/>
+  </div>
 </template>
+
+<script>
+import WorkerTable from "@/components/global/table/TableWorker";
+export default {
+  components: {
+    WorkerTable
+  }
+};
+</script>

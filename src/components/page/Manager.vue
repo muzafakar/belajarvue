@@ -47,7 +47,12 @@ export default {
         icon: "supervised_user_circle",
         title: "Worker",
         destination: "worker" /* /instance/:id/worker */
-      }
+      },
+      {
+        icon: "money",
+        title: "Payment",
+        destination: "payment" /* /instance/:id/worker */
+      },
     ]
   }),
   created() {

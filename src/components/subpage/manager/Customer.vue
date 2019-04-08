@@ -1,3 +1,14 @@
 <template>
-  <h1>this is customer</h1>
+  <div>
+    <CustomerTable/>
+  </div>
 </template>
+
+<script>
+import CustomerTable from "@/components/global/table/TableCustomer";
+export default {
+  components: {
+    CustomerTable
+  }
+};
+</script>

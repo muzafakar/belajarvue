@@ -3,7 +3,7 @@
     <DialogNewInstance/>
 
     <v-layout align-center justify-start row fill-height class="ps-2 light-blue darken-1">
-      <v-btn flat icon color="white" @click="refreshData">
+      <v-btn flat icon color="white" @click="fetchData('default')">
         <v-icon>refresh</v-icon>
       </v-btn>
       <v-flex xs4>
@@ -120,8 +120,7 @@
 
 <script>
 import DialogNewInstance from "@/components/global/DialogNewInstance";
-import { firestore } from "firebase";
-const firebase = require("../../plugins/firebase");
+const firebase = require("@/plugins/firebase");
 export default {
   components: {
     DialogNewInstance
@@ -151,10 +150,10 @@ export default {
       window.getApp.$emit("EVENT_NEW_INSTANCE_DIALOG");
     },
 
-    refreshData() {
+    fetchData(source) {
       this.loading = true;
       this.instance = [];
-      firebase.instance.get({ source: "default" }).then(instances => {
+      firebase.instance.get({source: source}).then(instances => {
         instances.forEach(doc => {
           let i = doc.data();
           i["id"] = doc.id;
@@ -168,14 +167,7 @@ export default {
   mounted() {
     this.loading = true;
     this.instance = [];
-    firebase.instance.get({ source: "cache" }).then(instances => {
-      instances.forEach(doc => {
-        let i = doc.data();
-        i["id"] = doc.id;
-        this.instance.push(i);
-      });
-      this.loading = false;
-    });
+    this.fetchData('cache')
   }
 };
 </script>
