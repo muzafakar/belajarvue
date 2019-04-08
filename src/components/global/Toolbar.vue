@@ -1,6 +1,8 @@
 <template>
   <v-toolbar color="light-blue darken-1" app dark flat>
-    <!-- <v-toolbar-side-icon/> -->
+    <v-btn icon class="hidden-md-and-up" @click="toggleDrawer">
+      <v-icon>menu</v-icon>
+    </v-btn>
     <v-toolbar-title>{{title}}</v-toolbar-title>
     <v-spacer/>
     <v-btn flat icon color="white">
@@ -49,6 +51,10 @@ export default {
   methods: {
     handleMenuAction(action) {
       this.$store.dispatch(action);
+    },
+
+    toggleDrawer(){
+      window.getApp.$emit("EVENT_TOGGLE_DRAWER")
     }
   }
 };

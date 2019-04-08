@@ -43,6 +43,7 @@
               <td>{{props.item.name}}</td>
               <td>{{props.item.phone}}</td>
               <td>{{$store.state.dusunMap[props.item.dusun]}}</td>
+              <td>{{props.item.timestamp.toDate()}}</td>
             </tr>
           </template>
         </v-data-table>
@@ -66,7 +67,8 @@ export default {
     headers: [
       { text: "Name", align: "left", value: "name" },
       { text: "Phone", align: "left", value: "owner", sortable: false },
-      { text: "Dusun", align: "left", value: "dusun" }
+      { text: "Dusun", align: "left", value: "dusun" },
+      { text: "Created", align: "left", value: "created" }
     ],
     items: []
   }),
@@ -115,6 +117,33 @@ export default {
       const object = this.$store.state.dusunMap;
       return Object.keys(object).find(key => object[key] === dusunName);
     }
+
+    /*  parseTimestamp(timestamp) {
+      var monthNames = new Array(
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      );
+
+      const d = timestamp.toDate();
+      const year = d.getFullYear();
+      const month = d.getMonth();
+      const day = d.getDate();
+      const hour = d.getHours();
+      const min = d.getMinutes();
+      const sec = d.getSeconds();
+
+      return `${day}/${monthNames[month]}/${year} | ${hour}:${min}:${sec}`;
+    }*/
   }
 };
 </script>

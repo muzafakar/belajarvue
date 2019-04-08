@@ -40,63 +40,63 @@
                 <v-divider vertical/>
                 <v-flex xs1>
                   <v-layout column align-center>
-                    <v-icon color="light-blue darken-1">drag_indicator</v-icon>
-                    <h3>{{props.item.channelCount}}</h3>
                     <h4>Channel</h4>
+                    <h3>{{props.item.channelCount}}</h3>
+                    <v-icon color="light-blue darken-1">drag_indicator</v-icon>
                   </v-layout>
                 </v-flex>
                 <v-divider vertical/>
 
                 <v-flex xs1>
                   <v-layout column align-center>
-                    <v-icon color="light-blue darken-1">location_city</v-icon>
-                    <h3>{{props.item.dusunCount}}</h3>
                     <h4>Dusun</h4>
+                    <h3>{{props.item.dusunCount}}</h3>
+                    <v-icon color="light-blue darken-1">location_city</v-icon>
                   </v-layout>
                 </v-flex>
                 <v-divider vertical/>
 
                 <v-flex xs1>
                   <v-layout column align-center>
-                    <v-icon color="light-blue darken-1">account_circle</v-icon>
-                    <h3>{{props.item.customerCount}}</h3>
                     <h4>Customer</h4>
+                    <h3>{{props.item.customerCount}}</h3>
+                    <v-icon color="light-blue darken-1">account_circle</v-icon>
                   </v-layout>
                 </v-flex>
                 <v-divider vertical/>
 
                 <v-flex xs1>
                   <v-layout column align-center>
-                    <v-icon color="light-blue darken-1">supervised_user_circle</v-icon>
-                    <h3>{{props.item.workerCount}}</h3>
                     <h4>Worker</h4>
+                    <h3>{{props.item.workerCount}}</h3>
+                    <v-icon color="light-blue darken-1">supervised_user_circle</v-icon>
                   </v-layout>
                 </v-flex>
                 <v-divider vertical/>
 
                 <v-flex xs1>
                   <v-layout column align-center>
-                    <v-icon color="light-blue darken-1">money</v-icon>
-                    <h3>Rp. {{props.item.cost}}</h3>
                     <h4>Iuran</h4>
+                    <h3>Rp. {{props.item.cost}}</h3>
+                    <v-icon color="light-blue darken-1">money</v-icon>
                   </v-layout>
                 </v-flex>
                 <v-divider vertical/>
 
                 <v-flex xs1>
                   <v-layout column align-center>
-                    <v-icon color="light-blue darken-1">money</v-icon>
-                    <h3>Rp. {{props.item.workerFee}}</h3>
                     <h4>Worker Fee</h4>
+                    <h3>Rp. {{props.item.workerFee}}</h3>
+                    <v-icon color="light-blue darken-1">money</v-icon>
                   </v-layout>
                 </v-flex>
                 <v-divider vertical/>
 
                 <v-flex xs1>
                   <v-layout column align-center>
-                    <v-icon color="light-blue darken-1">money</v-icon>
-                    <h3>{{props.item.isFined ? `Rp. ${props.item.fineCharge}` : '---'}}</h3>
                     <h4>Fine</h4>
+                    <h3>{{props.item.isFined ? `Rp. ${props.item.fineCharge}` : '---'}}</h3>
+                    <v-icon color="light-blue darken-1">money</v-icon>
                   </v-layout>
                 </v-flex>
                 <v-divider vertical/>

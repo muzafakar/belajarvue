@@ -30,7 +30,7 @@
           <template v-slot:items="props">
             <tr @click="props.expanded = !props.expanded">
               <td>{{props.item.name}}</td>
-              <td>{{props.item.timestamp}}</td>
+              <td>{{props.item.timestamp.toDate()}}</td>
             </tr>
           </template>
         </v-data-table>
@@ -77,6 +77,33 @@ export default {
           this.loading = false;
         });
     }
+
+    /* parseTimestamp(timestamp) {
+      var monthNames = new Array(
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      );
+
+      const d = timestamp.toDate();
+      const year = d.getFullYear();
+      const month = d.getMonth();
+      const day = d.getDate();
+      const hour = d.getHours();
+      const min = d.getMinutes();
+      const sec = d.getSeconds();
+
+      return `${day}/${monthNames[month]}/${year} | ${hour}:${min}:${sec}`;
+    }*/
   }
 };
 </script>
