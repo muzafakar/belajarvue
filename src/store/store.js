@@ -170,5 +170,13 @@ export default new Vuex.Store({
       })
       window.getApp.$emit("EVENT_TOGGLE_PROGGRESS_DIALOG")
     },
+
+    getAllInstance({}) {
+      firebase.instance.get().then(docs =>{
+        docs.forEach(doc=>{
+          doc.data()
+        })
+      })
+    }
   }
 })

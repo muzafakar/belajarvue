@@ -16,7 +16,7 @@
       <v-card class="elevation-3">
         <v-data-table
           :headers="headers"
-          :items="items"
+          :items="instance"
           :loading="loading"
           :search="search"
           :expand="expand"
@@ -32,15 +32,80 @@
 
           <template v-slot:expand="props">
             <v-card flat class="mx-5 my-2">
-              <p>item</p>
-              <p>item</p>
-              <p>item</p>
-              <p>item</p>
-              <p>item</p>
-              <p>item</p>
-              <!-- <router-link to="/instance/detail/KJuda98sanxaKJAdun"> -->
-              <v-btn color="blue-grey darken-3" dark @click="navigateToDetail(props.item.id)">detail</v-btn>
-              <!-- </router-link> -->
+              <v-layout row wrap>
+                <v-divider vertical/>
+                <v-flex xs1>
+                  <v-layout column align-center>
+                    <v-icon color="light-blue darken-1">drag_indicator</v-icon>
+                    <h3>{{props.item.channelCount}}</h3>
+                    <h4>Channel</h4>
+                  </v-layout>
+                </v-flex>
+                <v-divider vertical/>
+
+                <v-flex xs1>
+                  <v-layout column align-center>
+                    <v-icon color="light-blue darken-1">location_city</v-icon>
+                    <h3>{{props.item.dusunCount}}</h3>
+                    <h4>Dusun</h4>
+                  </v-layout>
+                </v-flex>
+                <v-divider vertical/>
+
+                <v-flex xs1>
+                  <v-layout column align-center>
+                    <v-icon color="light-blue darken-1">account_circle</v-icon>
+                    <h3>{{props.item.customerCount}}</h3>
+                    <h4>Customer</h4>
+                  </v-layout>
+                </v-flex>
+                <v-divider vertical/>
+
+                <v-flex xs1>
+                  <v-layout column align-center>
+                    <v-icon color="light-blue darken-1">supervised_user_circle</v-icon>
+                    <h3>{{props.item.workerCount}}</h3>
+                    <h4>Worker</h4>
+                  </v-layout>
+                </v-flex>
+                <v-divider vertical/>
+
+                <v-flex xs1>
+                  <v-layout column align-center>
+                    <v-icon color="light-blue darken-1">money</v-icon>
+                    <h3>Rp. {{props.item.cost}}</h3>
+                    <h4>Iuran</h4>
+                  </v-layout>
+                </v-flex>
+                <v-divider vertical/>
+
+                <v-flex xs1>
+                  <v-layout column align-center>
+                    <v-icon color="light-blue darken-1">money</v-icon>
+                    <h3>Rp. {{props.item.workerFee}}</h3>
+                    <h4>Worker Fee</h4>
+                  </v-layout>
+                </v-flex>
+                <v-divider vertical/>
+
+                <v-flex xs1>
+                  <v-layout column align-center>
+                    <v-icon color="light-blue darken-1">money</v-icon>
+                    <h3>{{props.item.isFined ? `Rp. ${props.item.fineCharge}` : '---'}}</h3>
+                    <h4>Fine</h4>
+                  </v-layout>
+                </v-flex>
+                <v-divider vertical/>
+                <v-spacer/>
+                <v-flex xs1>
+                  <v-btn
+                    color="blue-grey darken-3"
+                    dark
+                    @click="navigateToDetail(props.item.id)"
+                  >detail</v-btn>
+                </v-flex>
+              </v-layout>
+              <v-divider class="mt-3"/>
             </v-card>
           </template>
         </v-data-table>
@@ -51,6 +116,8 @@
 
 <script>
 import DialogNewInstance from "@/components/global/DialogNewInstance";
+import { firestore } from "firebase";
+const firebase = require("../../plugins/firebase");
 export default {
   components: {
     DialogNewInstance
@@ -64,38 +131,7 @@ export default {
       { text: "Owner", align: "left", value: "owner" },
       { text: "Address", align: "left", value: "address" }
     ],
-    items: [
-      {
-        id: "Kasd9uinjkasdasd89",
-        name: "Muzafakar Instance",
-        owner: "Zulfakar",
-        address: "Firebase"
-      },
-      {
-        id: "ASlinqoidask2e1208",
-        name: "Toshiba",
-        owner: "Zulfakar",
-        address: "Firebase"
-      },
-      {
-        id: "Maosihdjn1oi2nmasd",
-        name: "Ubuntu",
-        owner: "Zulfakar",
-        address: "Firebase"
-      },
-      {
-        id: "Akjasfdoid1n2kjadasd",
-        name: "Kde Plasma",
-        owner: "Zulfakar",
-        address: "Firebase"
-      },
-      {
-        id: "Zoiahksdno1ui2jndmasoik",
-        name: "Linux",
-        owner: "Zulfakar",
-        address: "Firebase"
-      }
-    ]
+    instance: []
   }),
   methods: {
     navigateToDetail(id) {
@@ -108,6 +144,16 @@ export default {
     showDialog() {
       window.getApp.$emit("EVENT_NEW_INSTANCE_DIALOG");
     }
+  },
+
+  mounted() {
+    firebase.instance.get({ source: "cache" }).then(instances => {
+      instances.forEach(doc => {
+        let i = doc.data();
+        i["id"] = doc.id;
+        this.instance.push(i);
+      });
+    });
   }
 };
 </script>
