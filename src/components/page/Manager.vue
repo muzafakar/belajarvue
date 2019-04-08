@@ -1,58 +1,67 @@
 <template>
   <div>
-    <Toolbar title="Manager"/>
-    <Drawer v-bind:items="drawerItem" v-bind:subheader="subheader" :showBack="true"/>
-    <v-content>
-      <v-tabs
-        centered
-        v-model="active"
-        color="light-blue darken-1"
-        dark
-        icons-and-text
-        slider-color="blue-grey darken-4"
-      >
-        <v-tab v-for="item in tabItem" :key="item.key" @click="navigateTo(item.destination)">
-          {{item.title}}
-          <v-icon>{{item.icon}}</v-icon>
-        </v-tab>
-      </v-tabs>
-      <router-view/>
-    </v-content>
+    <div class="light-blue darken-1">
+      <v-btn flat icon color="white" @click="backToInstance">
+        <v-icon>arrow_back</v-icon>
+      </v-btn>
+      <span class="light-blue darken-1 pl-2 white--text">{{id}}</span>
+    </div>
+    <v-tabs
+      centered
+      color="light-blue darken-1"
+      dark
+      icons-and-text
+      slider-color="blue-grey darken-4"
+    >
+      <v-tab v-for="item in tabItem" :key="item.key" @click="navigateTo(item.destination)">
+        {{item.title}}
+        <v-icon>{{item.icon}}</v-icon>
+      </v-tab>
+    </v-tabs>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import Toolbar from "@/components/global/Toolbar";
-import Drawer from "@/components/global/Drawer";
 export default {
-  components: {
-    Toolbar,
-    Drawer
-  },
   data: () => ({
-    subheader: "{{Nama TV Kabel}}",
+    id: "",
     tabItem: [
-      { icon: "info", title: "Detail", destination: "/instance/detail" },
+      {
+        icon: "info",
+        title: "Detail",
+        destination: "detail" /* /instance/:id/detail */
+      },
       {
         icon: "account_circle",
         title: "Customer",
-        destination: "/instance/customer"
+        destination: "customer" /* /instance/:id/customer */
       },
-      { icon: "location_city", title: "Dusun", destination: "/instance/dusun" },
+      {
+        icon: "location_city",
+        title: "Dusun",
+        destination: "dusun"
+      } /* /instance/:id/dusun */,
       {
         icon: "supervised_user_circle",
         title: "Worker",
-        destination: "/instance/worker"
+        destination: "worker" /* /instance/:id/worker */
       }
-    ],
-    drawerItem: [
-      { icon: "dashboard", title: "Dashboard", destination: "/dashboard" },
-      { icon: "domain", title: "Instance", destination: "/instance" }
     ]
   }),
+  mounted() {
+    this.id = this.$route.params.id;
+  },
+
   methods: {
     navigateTo(destination) {
-      this.$router.push(destination);
+      this.$router.push({
+        path: `/instance/${this.id}/${destination}`
+      });
+    },
+
+    backToInstance() {
+      this.$router.push("/instance");
     }
   }
 };
