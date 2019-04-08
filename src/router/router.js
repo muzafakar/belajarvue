@@ -12,7 +12,7 @@ import Detail from '@/components/subpage/manager/Detail'
 import Customer from '@/components/subpage/manager/Customer'
 import Dusun from '@/components/subpage/manager/Dusun'
 import Worker from '@/components/subpage/manager/Worker'
-import InstanceTable from '@/components/global/InstanceTable'
+import TableInstance from '@/components/global/TableInstance'
 
 Vue.use(Router)
 
@@ -46,7 +46,7 @@ const router = new Router({
           children: [{
               path: '/instance',
               name: 'table',
-              component: InstanceTable
+              component: TableInstance
             },
             {
               path: '/instance/:id/detail',

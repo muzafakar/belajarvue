@@ -4,7 +4,7 @@
       <v-btn flat icon color="white" @click="backToInstance">
         <v-icon>arrow_back</v-icon>
       </v-btn>
-      <span class="light-blue darken-1 pl-2 white--text">{{id}}</span>
+      <span class="light-blue darken-1 pl-2 white--text">{{viewInstance.name}}</span>
     </div>
     <v-tabs
       centered
@@ -23,9 +23,10 @@
 </template>
 
 <script>
+const firebase = require("../../plugins/firebase");
 export default {
   data: () => ({
-    id: "",
+    viewInstance: null,
     tabItem: [
       {
         icon: "info",
@@ -49,18 +50,19 @@ export default {
       }
     ]
   }),
-  mounted() {
-    this.id = this.$route.params.id;
+  created() {
+    this.viewInstance = this.$store.state.viewInstance;
   },
 
   methods: {
     navigateTo(destination) {
       this.$router.push({
-        path: `/instance/${this.id}/${destination}`
+        path: `/instance/${this.viewInstance.id}/${destination}`
       });
     },
 
     backToInstance() {
+      this.$store.commit("clearCacehInstance");
       this.$router.push("/instance");
     }
   }

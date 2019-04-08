@@ -9,6 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
+    viewInstance: null,
     tempDusun: [],
     tempWorker: [],
     tempCustomer: [],
@@ -50,6 +51,15 @@ export default new Vuex.Store({
     },
     clearCacheCustomer(state) {
       state.tempCustomer = []
+    },
+
+    // VIEW CACHE
+    cacheInstance(state, obj) {
+      state.viewInstance = obj
+    },
+
+    clearCacehInstance(state) {
+      state.viewInstance = null
     }
   },
   actions: {
@@ -92,6 +102,7 @@ export default new Vuex.Store({
 
     // Instance
     async createNewInstance({
+      commit,
       state,
       dispatch
     }, instance) {
@@ -164,19 +175,14 @@ export default new Vuex.Store({
         snackbarColor = 'error'
       }
 
+      commit('clearCacheDusun')
+      commit('clearCacheWorker')
+      commit('clearCacheCustomer')
       dispatch('showSnackbar', {
         message: snackbarMessage,
         color: snackbarColor
       })
       window.getApp.$emit("EVENT_TOGGLE_PROGGRESS_DIALOG")
     },
-
-    getAllInstance({}) {
-      firebase.instance.get().then(docs =>{
-        docs.forEach(doc=>{
-          doc.data()
-        })
-      })
-    }
   }
 })

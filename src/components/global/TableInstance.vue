@@ -3,13 +3,17 @@
     <DialogNewInstance/>
 
     <v-layout align-center justify-start row fill-height class="ps-2 light-blue darken-1">
-      <v-btn flat icon color="white" @click="showDialog">
-        <v-icon>add</v-icon>
+      <v-btn flat icon color="white" @click="refreshData">
+        <v-icon>refresh</v-icon>
       </v-btn>
       <v-flex xs4>
         <v-text-field label="Search" v-model="search" dark color="white" clearable></v-text-field>
       </v-flex>
       <v-spacer/>
+      <v-btn flat color="white" dark @click="expand = !expand">{{expand ? 'MX' : 'SX'}}</v-btn>
+      <v-btn flat color="white" @click="showDialog">
+        <v-icon>add</v-icon>Create New Instance
+      </v-btn>
     </v-layout>
 
     <v-container grid-list-xs>
@@ -101,7 +105,7 @@
                   <v-btn
                     color="blue-grey darken-3"
                     dark
-                    @click="navigateToDetail(props.item.id)"
+                    @click="navigateToDetail(props.item)"
                   >detail</v-btn>
                 </v-flex>
               </v-layout>
@@ -134,25 +138,43 @@ export default {
     instance: []
   }),
   methods: {
-    navigateToDetail(id) {
+    navigateToDetail(instance) {
+      this.$store.commit("cacheInstance", instance);
+
       this.$router.push({
-        path: `/instance/${id}/detail`,
-        params: { id: id, name: "iak" }
+        path: `/instance/${instance.id}/detail`,
+        params: { id: instance.id }
       });
     },
 
     showDialog() {
       window.getApp.$emit("EVENT_NEW_INSTANCE_DIALOG");
+    },
+
+    refreshData() {
+      this.loading = true;
+      this.instance = [];
+      firebase.instance.get({ source: "default" }).then(instances => {
+        instances.forEach(doc => {
+          let i = doc.data();
+          i["id"] = doc.id;
+          this.instance.push(i);
+        });
+        this.loading = false;
+      });
     }
   },
 
   mounted() {
+    this.loading = true;
+    this.instance = [];
     firebase.instance.get({ source: "cache" }).then(instances => {
       instances.forEach(doc => {
         let i = doc.data();
         i["id"] = doc.id;
         this.instance.push(i);
       });
+      this.loading = false;
     });
   }
 };
