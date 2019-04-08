@@ -52,11 +52,14 @@ export default {
         icon: "money",
         title: "Payment",
         destination: "payment" /* /instance/:id/worker */
-      },
+      }
     ]
   }),
   created() {
     this.viewInstance = this.$store.state.viewInstance;
+
+    this.$store.commit("clearCacheViewDusun");
+    this.fetchCacheDusun(this.viewInstance.id);
   },
 
   methods: {
@@ -67,8 +70,42 @@ export default {
     },
 
     backToInstance() {
+      this.$store.commit("clearCacheViewDusun");
       this.$store.commit("clearCacehInstance");
       this.$router.push("/instance");
+    },
+
+    fetchCacheDusun(instanceId) {
+      firebase.instance
+        .doc(instanceId)
+        .collection("dusun")
+        .get({ source: "cache" })
+        .then(docs => {
+          if (docs.empty) {
+            this.fetchDefaultDusun(instanceId);
+          } else {
+            let dusunMap = {};
+            docs.forEach(doc => {
+              dusunMap[doc.id] = doc.data().name;
+            });
+            this.$store.commit("cacheViewDusun", dusunMap);
+          }
+        });
+    },
+    fetchDefaultDusun(instanceId) {
+      firebase.instance
+        .doc(instanceId)
+        .collection("dusun")
+        .get({ source: "default" })
+        .then(docs => {
+          docs.forEach(doc => {
+            let dusunMap = {};
+            docs.forEach(doc => {
+              dusunMap[doc.id] = doc.data().name;
+            });
+            this.$store.commit("cacheViewDusun", dusunMap);
+          });
+        });
     }
   }
 };

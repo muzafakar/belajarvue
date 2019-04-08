@@ -1,5 +1,6 @@
 <template>
   <v-toolbar color="light-blue darken-1" app dark flat>
+    <!-- <v-toolbar-side-icon/> -->
     <v-toolbar-title>{{title}}</v-toolbar-title>
     <v-spacer/>
     <v-btn flat icon color="white">

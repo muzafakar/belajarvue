@@ -31,7 +31,7 @@
             <tr @click="props.expanded = !props.expanded">
               <td>{{props.item.name}}</td>
               <td>{{props.item.phone}}</td>
-              <td>{{props.item.area}}</td>
+              <td>{{parseAreaArray(props.item.area)}}</td>
             </tr>
           </template>
         </v-data-table>
@@ -78,6 +78,15 @@ export default {
           });
           this.loading = false;
         });
+    },
+
+    parseAreaArray(areas) {
+      let area = "";
+      areas.forEach(a => {
+        area += this.$store.state.dusunMap[a];
+        area += ", ";
+      });
+      return area;
     }
   }
 };

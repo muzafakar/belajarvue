@@ -24,7 +24,7 @@
             <tr @click="props.expanded = !props.expanded">
               <td>{{props.item.name}}</td>
               <td>{{props.item.phone}}</td>
-              <td>{{props.item.dusun}}</td>
+              <td>{{$store.state.dusunMap[props.item.dusun]}}</td>
             </tr>
           </template>
         </v-data-table>

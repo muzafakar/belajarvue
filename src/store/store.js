@@ -10,6 +10,7 @@ export default new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     viewInstance: null,
+    dusunMap: null,
     tempDusun: [],
     tempWorker: [],
     tempCustomer: [],
@@ -60,6 +61,14 @@ export default new Vuex.Store({
 
     clearCacehInstance(state) {
       state.viewInstance = null
+    },
+
+    cacheViewDusun(state, obj) {
+      state.dusunMap = obj
+    },
+
+    clearCacheViewDusun(state) {
+      state.dusunMap = null
     }
   },
   actions: {
