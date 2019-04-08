@@ -29,16 +29,14 @@ const login = function (user) {
 
 
 const auth = firebase.auth()
-const dbBatch = firebase.firestore().batch()
-const cOwner = firebase.firestore().collection('owner')
-const cTvKabel = firebase.firestore().collection('tvkabel')
-const cCustomer = firebase.firestore().collection('customer_dummy')
+const firestore = firebase.firestore()
+const batch = firebase.firestore().batch()
+const instance = firebase.firestore().collection('instance')
 
 export {
-    dbBatch,
-    cOwner,
-    cTvKabel,
-    cCustomer,
     login,
-    auth
+    auth,
+    firestore,
+    instance,
+    batch
 }
