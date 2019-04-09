@@ -24,6 +24,9 @@
               v-model="dusunSearch"
             ></v-autocomplete>
           </v-flex>
+          <v-btn color="white" flat @click="toggleNewWorkerDialog">
+            <v-icon>add</v-icon>Add New Worker
+          </v-btn>
           <v-btn flat icon color="white" @click="fetchData('default')">
             <v-icon>refresh</v-icon>
           </v-btn>
@@ -48,12 +51,18 @@
         </v-data-table>
       </v-card>
     </v-container>
+
+    <DialogNewWorker/>
   </div>
 </template>
 
 <script>
+import DialogNewWorker from "@/components/global/dialog/DialogNewWorker";
 const firebase = require("../../../plugins/firebase");
 export default {
+  components: {
+    DialogNewWorker
+  },
   data: () => ({
     loading: false,
     search: "",
@@ -74,6 +83,10 @@ export default {
     this.instanceId = this.$store.state.viewInstance.id;
     console.log(this.instanceId);
     this.fetchData("cache");
+
+    window.getApp.$on("EVENT_ADD_WORKER_PROCESS", () => {
+      this.fetchData("cache");
+    });
   },
 
   computed: {
@@ -95,7 +108,7 @@ export default {
   methods: {
     fetchData(source) {
       this.loading = true;
-      this.items = [];
+      const itemsArr = [];
       firebase.instance
         .doc(this.instanceId)
         .collection("worker")
@@ -104,8 +117,10 @@ export default {
           docs.forEach(doc => {
             let w = doc.data();
             w["id"] = doc.id;
-            this.items.push(w);
+            itemsArr.push(w);
           });
+
+          this.items = itemsArr;
           this.loading = false;
         });
     },
@@ -122,6 +137,10 @@ export default {
     searchByDusunName(dusunName) {
       const object = this.$store.state.dusunMap;
       return Object.keys(object).find(key => object[key] === dusunName);
+    },
+
+    toggleNewWorkerDialog() {
+      window.getApp.$emit("EVENT_NEW_WORKER_DIALOG");
     }
   }
 };

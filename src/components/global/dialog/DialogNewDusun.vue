@@ -13,6 +13,7 @@
         </v-btn>
         <h2 class="light-blue--text">Add New Dusun</h2>
       </v-card-title>
+      <v-divider/>
       <v-text-field
         label="Dusun Name"
         v-model="dusunName"
@@ -20,7 +21,7 @@
         class="px-5"
         :loading="loading"
       ></v-text-field>
-      <v-divider></v-divider>
+      <v-divider/>
       <v-card-actions>
         <v-spacer/>
         <v-btn color="light-blue darken-1" dark :loading="loading" @click="submitDusun">add</v-btn>

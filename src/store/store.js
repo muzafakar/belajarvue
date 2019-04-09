@@ -237,7 +237,7 @@ export default new Vuex.Store({
       var snackbarColor = ""
       try {
         await firebase.instance.doc(instanceId).collection("customer").add(customer)
-        snackbarMessage = `${customer.name} added to ${instanceName}`
+        snackbarMessage = `${customer.name} added to ${instanceName} as ${state.dusunMap[customer.dusun]} customer`
         snackbarColor = "success"
       } catch (error) {
         snackbarMessage = `error on customer dusun, reason: ${error}`
@@ -246,6 +246,32 @@ export default new Vuex.Store({
       }
 
       window.getApp.$emit("EVENT_ADD_CUSTOMER_PROCESS")
+      dispatch('showSnackbar', {
+        message: snackbarMessage,
+        color: snackbarColor
+      })
+    },
+
+    async addWorker({
+      dispatch,
+      state
+    }, worker) {
+      const instanceId = state.viewInstance.id
+      const instanceName = state.viewInstance.name
+
+      var snackbarMessage = ""
+      var snackbarColor = ""
+      try {
+        await firebase.instance.doc(instanceId).collection("worker").add(worker)
+        snackbarMessage = `${worker.name} added to ${instanceName} as worker on ${worker.area.length} dusun(s)`
+        snackbarColor = "success"
+      } catch (error) {
+        snackbarMessage = `error on adding worker, reason: ${error}`
+        snackbarColor = 'error'
+        console.log(error);
+      }
+
+      window.getApp.$emit("EVENT_ADD_WORKER_PROCESS")
       dispatch('showSnackbar', {
         message: snackbarMessage,
         color: snackbarColor
