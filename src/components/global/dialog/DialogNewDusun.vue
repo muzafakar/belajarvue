@@ -43,8 +43,7 @@ export default {
     });
 
     window.getApp.$on("EVENT_ADD_DUSUN_PROCESS", () => {
-      this.loading = false;
-      this.showDialog = false;
+      this.loading = this.showDialog = false;
     });
   },
 

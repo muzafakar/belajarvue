@@ -24,6 +24,9 @@
               v-model="dusunSearch"
             ></v-autocomplete>
           </v-flex>
+          <v-btn color="white" flat @click="toggleNewCustomerDialog">
+            <v-icon>add</v-icon>Add New Customer
+          </v-btn>
           <v-btn flat icon color="white" @click="fetchData('default')">
             <v-icon>refresh</v-icon>
           </v-btn>
@@ -49,14 +52,19 @@
         </v-data-table>
       </v-card>
     </v-container>
+
+    <DialogNewCustomer/>
   </div>
 </template>
 
 <script>
-import { getHashes } from "crypto";
+import DialogNewCustomer from "@/components/global/dialog/DialogNewCustomer";
 const firebase = require("../../../plugins/firebase");
 
 export default {
+  components: {
+    DialogNewCustomer
+  },
   data: () => ({
     loading: false,
     search: "",
@@ -92,13 +100,16 @@ export default {
   mounted() {
     this.instanceId = this.$store.state.viewInstance.id;
     console.log(this.instanceId);
-    this.fetchData("cache");
+
+    window.getApp.$on("EVENT_ADD_CUSTOMER_PROCESS", () => {
+      this.fetchData("cache");
+    });
   },
 
   methods: {
     fetchData(source) {
       this.loading = true;
-      this.items = [];
+      const itemsArr = [];
       firebase.instance
         .doc(this.instanceId)
         .collection("customer")
@@ -107,8 +118,10 @@ export default {
           docs.forEach(doc => {
             let c = doc.data();
             c["id"] = doc.id;
-            this.items.push(c);
+            itemsArr.push(c);
           });
+
+          this.items = itemsArr;
           this.loading = false;
         });
     },
@@ -116,6 +129,10 @@ export default {
     searchByDusunName(dusunName) {
       const object = this.$store.state.dusunMap;
       return Object.keys(object).find(key => object[key] === dusunName);
+    },
+
+    toggleNewCustomerDialog() {
+      window.getApp.$emit("EVENT_NEW_CUSTOMER_DIALOG");
     }
 
     /*  parseTimestamp(timestamp) {

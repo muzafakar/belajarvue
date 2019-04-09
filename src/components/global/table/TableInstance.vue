@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import DialogNewInstance from "@/components/global/DialogNewInstance";
+import DialogNewInstance from "@/components/global/dialog/DialogNewInstance";
 const firebase = require("@/plugins/firebase");
 export default {
   components: {

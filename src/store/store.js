@@ -224,6 +224,32 @@ export default new Vuex.Store({
         message: snackbarMessage,
         color: snackbarColor
       })
+    },
+
+    async addCustomer({
+      state,
+      dispatch
+    }, customer) {
+      const instanceId = state.viewInstance.id
+      const instanceName = state.viewInstance.name
+
+      var snackbarMessage = ""
+      var snackbarColor = ""
+      try {
+        await firebase.instance.doc(instanceId).collection("customer").add(customer)
+        snackbarMessage = `${customer.name} added to ${instanceName}`
+        snackbarColor = "success"
+      } catch (error) {
+        snackbarMessage = `error on customer dusun, reason: ${error}`
+        snackbarColor = "error"
+        console.log(error);
+      }
+
+      window.getApp.$emit("EVENT_ADD_CUSTOMER_PROCESS")
+      dispatch('showSnackbar', {
+        message: snackbarMessage,
+        color: snackbarColor
+      })
     }
   }
 })
