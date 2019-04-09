@@ -100,11 +100,15 @@ export default new Vuex.Store({
       })
     },
 
-    logout({}) {
+    logout({
+      commit
+    }) {
       commit('logoutProcedure')
     },
 
-    clean_logout({}) {
+    clean_logout({
+      commit
+    }) {
       commit('clearCache')
       commit('logoutProcedure')
     },
@@ -193,5 +197,33 @@ export default new Vuex.Store({
       })
       window.getApp.$emit("EVENT_TOGGLE_PROGGRESS_DIALOG")
     },
+
+    // SINGLE INSERT
+    async addNewDusun({
+      state,
+      dispatch
+    }, dusun) {
+      const instanceId = state.viewInstance.id
+      const instanceName = state.viewInstance.name
+
+      var snackbarMessage = ""
+      var snackbarColor = ""
+      try {
+        await firebase.instance.doc(instanceId).collection("dusun").add(dusun)
+
+        snackbarMessage = `${dusun.name} added to ${instanceName}`
+        snackbarColor = "success"
+      } catch (error) {
+        snackbarMessage = `error on adding dusun, reason: ${error}`
+        snackbarColor = "error"
+        console.log(error);
+      }
+
+      window.getApp.$emit("EVENT_ADD_DUSUN_PROCESS")
+      dispatch('showSnackbar', {
+        message: snackbarMessage,
+        color: snackbarColor
+      })
+    }
   }
 })

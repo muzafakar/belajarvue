@@ -9,11 +9,15 @@
               v-model="search"
               dark
               color="white"
+              prepend-icon="search"
               clearable
               class="pb-0"
             ></v-text-field>
           </v-flex>
           <v-spacer></v-spacer>
+          <v-btn color="white" flat @click="toggleNewDusunDialog">
+            <v-icon>add</v-icon>Add New Dusun
+          </v-btn>
           <v-btn flat icon color="white" @click="fetchData('default')">
             <v-icon>refresh</v-icon>
           </v-btn>
@@ -36,12 +40,18 @@
         </v-data-table>
       </v-card>
     </v-container>
+
+    <DialogNewDusun/>
   </div>
 </template>
 
 <script>
+import DialogNewDusun from "@/components/global/dialog/DialogNewDusun";
 const firebase = require("../../../plugins/firebase");
 export default {
+  components: {
+    DialogNewDusun
+  },
   data: () => ({
     loading: false,
     search: "",
@@ -58,12 +68,16 @@ export default {
     this.instanceId = this.$store.state.viewInstance.id;
     console.log(this.instanceId);
     this.fetchData("cache");
+
+    window.getApp.$on("EVENT_ADD_DUSUN_PROCESS", () => {
+      this.fetchData("cache");
+    });
   },
 
   methods: {
     fetchData(source) {
       this.loading = true;
-      this.items = [];
+      const itemArr = [];
       firebase.instance
         .doc(this.instanceId)
         .collection("dusun")
@@ -72,10 +86,15 @@ export default {
           docs.forEach(doc => {
             let d = doc.data();
             d["id"] = doc.id;
-            this.items.push(d);
+            itemArr.push(d);
           });
+          this.items = itemArr;
           this.loading = false;
         });
+    },
+
+    toggleNewDusunDialog() {
+      window.getApp.$emit("EVENT_NEW_DUSUN_DIALOG");
     }
 
     /* parseTimestamp(timestamp) {

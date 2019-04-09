@@ -54,7 +54,6 @@ export default {
   },
   created() {
     window.getApp.$on("EVENT_TOGGLE_DRAWER", () => {
-      
       this.drawer = true;
     });
   }
