@@ -34,7 +34,10 @@
 
       <v-autocomplete
         color="primary"
-        :items="dusunMapToArray"
+        :items="dusunMapToArrayOfObject"
+        item-text="name"
+        item-value="id"
+        hide-selected
         placeholder="Dusun"
         v-model="dusun"
         :loading="loading"
@@ -59,19 +62,20 @@ export default {
     showDialog: false,
     name: "",
     phone: "",
-    dusun: "",
-    dusunId: ""
+    dusun: ""
   }),
 
-  watch: {
-    dusun: function() {
-      this.dusunId = this.setDusunId(this.dusun);
-    }
-  },
-
   computed: {
-    dusunMapToArray() {
-      return Object.values(this.$store.state.dusunMap);
+    dusunMapToArrayOfObject() {
+      const keys = Object.keys(this.$store.state.dusunMap);
+      const values = Object.values(this.$store.state.dusunMap);
+      let arr = [];
+      for (let i = 0; i < keys.length; i++) {
+        const element = { id: keys[i], name: values[i] };
+        arr.push(element);
+      }
+
+      return arr;
     }
   },
 
@@ -86,17 +90,12 @@ export default {
   },
 
   methods: {
-    setDusunId(dusunName) {
-      const object = this.$store.state.dusunMap;
-      return Object.keys(object).find(key => object[key] === dusunName);
-    },
-
     submitCustomer() {
       this.loading = true;
       let customer = {
         name: this.name,
         phone: this.phone,
-        dusun: this.dusunId,
+        dusun: this.dusun,
         timestamp: new Date()
       };
 

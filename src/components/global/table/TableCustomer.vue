@@ -100,6 +100,7 @@ export default {
   mounted() {
     this.instanceId = this.$store.state.viewInstance.id;
     console.log(this.instanceId);
+    this.fetchData("cache");
 
     window.getApp.$on("EVENT_ADD_CUSTOMER_PROCESS", () => {
       this.fetchData("cache");
